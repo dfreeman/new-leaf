@@ -1,0 +1,41 @@
+.root {
+  margin: auto;
+
+  width: 1280px;
+  height: 600px;
+
+  display: grid;
+  gap: 8px;
+  grid-template: 100px 50px 1fr / 360px 1fr 360px;
+  grid-template-areas:
+    "art text status"
+    "art text menu"
+    "art text menu-content";
+}
+
+.art {
+  grid-area: art;
+  background-color: #668;
+}
+
+.text {
+  padding: 8px;
+  grid-area: text;
+  background-color: #866;
+  overflow: auto;
+}
+
+.status {
+  grid-area: status;
+  background-color: #686;
+}
+
+.menu {
+  grid-area: menu;
+  background-color: #686;
+}
+
+.menuContent {
+  grid-area: menu-content;
+  background-color: #686;
+}
