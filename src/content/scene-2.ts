@@ -4,6 +4,14 @@ import portMusic from '../assets/audio/01-port.mp3';
 
 export const seenShipwreckIntro = flag``;
 
+export const mutiny = flag``;
+
+export const ritualTattoos = flag``;
+
+export const foundLookout = flag``;
+
+export const missingCrew = flag``;
+
 export const shiwreck = new Scene({
   date: 'Day 25',
   art: shipArt,
