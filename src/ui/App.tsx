@@ -69,7 +69,7 @@ function SceneOutro(props: {
           description: linkify(desc`Continue`),
           action() {
             props.actions.addJournalFlags(
-              props.phase.scene.intro.flatMap((bit) => bit.setsFlags ?? []),
+              props.phase.scene.outro.flatMap((bit) => bit.setsFlags ?? []),
             );
             props.onContinue();
           },
@@ -172,7 +172,10 @@ type GamePhase =
 export function App() {
   const [state, setState] = useState<'start' | 'playing' | 'end'>('start');
   return state === 'playing' ? (
-    <Game scenes={[atTheDocks, shipwreck, mysteryNight]} onEnd={() => setState('end')} />
+    <Game
+      scenes={[atTheDocks, shipwreck, mysteryNight]}
+      onEnd={() => setState('end')}
+    />
   ) : state === 'start' ? (
     <div className={styles.splash} onClick={() => setState('playing')}>
       Click to Start
