@@ -87,7 +87,7 @@ export function Typewriter(props: {
 
   useEffect(() => {
     end.current?.scrollIntoView();
-  }, [current]);
+  }, [current, offset]);
 
   return (
     <div onClick={finish} className={styles.scroller}>

@@ -131,6 +131,17 @@ type GamePhase =
     };
 
 export function App() {
+  const [playing, setPlaying] = useState(false);
+  return playing ? (
+    <Game />
+  ) : (
+    <div className={styles.splash} onClick={() => setPlaying(true)}>
+      Click to Start
+    </div>
+  );
+}
+
+function Game() {
   const state = useMemo(() => {
     const state = new GameState();
     console.log(state);
@@ -171,6 +182,7 @@ export function App() {
 
   return (
     <div className={styles.root}>
+      <audio src={phase.scene.music} autoPlay={true} loop={true} />
       <div className={`${styles.art} ${styles.panel}`}>
         <img src={phase.scene.art} style={{ width: '100%' }} />
       </div>
@@ -188,10 +200,13 @@ export function App() {
       </div>
       <div className={`${styles.journal} ${styles.panel}`}>
         <Typewriter
-          content={journal.flatMap((flag) => [
-            { description: flag.description },
-            { description: desc`\n\n` },
-          ])}
+          content={[
+            { description: desc`Journal` },
+            ...journal.flatMap((flag) => [
+              { description: desc`\n\n` },
+              { description: flag.description },
+            ]),
+          ]}
         />
       </div>
     </div>

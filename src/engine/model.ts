@@ -70,11 +70,15 @@ export class Scene {
   public declare introFlag: JournalFlag;
   public declare date: string;
   public declare art: string;
+  public declare music: string;
   public declare description: Description;
   public declare areas: Array<Area>;
 
   public constructor(
-    params: Pick<Scene, 'introFlag' | 'art' | 'date' | 'description' | 'areas'>,
+    params: Pick<
+      Scene,
+      'introFlag' | 'art' | 'music' | 'date' | 'description' | 'areas'
+    >,
   ) {
     Object.assign(this, params);
   }

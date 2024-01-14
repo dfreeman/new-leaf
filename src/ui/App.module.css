@@ -9,6 +9,17 @@
   background-color: var(--backdrop);
 }
 
+.splash {
+  color: var(--link-highlight);
+  font-size: 200%;
+  width: 100vw;
+  height: 100vh;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .root {
   margin: auto;
 

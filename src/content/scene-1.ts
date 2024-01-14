@@ -1,5 +1,6 @@
 import { Scene, desc, flag, interaction } from '../engine/model';
 import shipArt from '../assets/ship.png';
+import portMusic from '../assets/audio/01-port.mp3';
 
 export const seenDocsIntro = flag`
   Today is my first day working as a crewmate on this ship.
@@ -41,6 +42,7 @@ export const atTheDocks = new Scene({
   introFlag: seenDocsIntro,
   date: 'Day 1',
   art: shipArt,
+  music: portMusic,
   description: desc`
     Today is your first day as part of the crew.
 
