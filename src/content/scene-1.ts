@@ -1,4 +1,5 @@
 import { Scene, desc, flag, interaction } from '../engine/model';
+import shipArt from '../assets/ship.png';
 
 export const seenDocsIntro = flag`
   Today is my first day working as a crewmate on this ship.
@@ -36,9 +37,11 @@ export const seamanTattoo = flag`
   Based on their scars they seem to have gone through some rough times.
 `;
 
-export const atTheDocks = new Scene(
-  seenDocsIntro,
-  desc`
+export const atTheDocks = new Scene({
+  introFlag: seenDocsIntro,
+  date: 'Day 1',
+  art: shipArt,
+  description: desc`
     Today is your first day as part of the crew.
 
     You came to the Port to start a new life. After a few months of
@@ -59,8 +62,9 @@ export const atTheDocks = new Scene(
     Today your job is to ensure everyone who’s supposed to be aboard, makes it.
 
   `,
-  [
+  areas: [
     {
+      name: 'dock',
       herePrompt: desc`You are standing on the dock.`,
       travelPrompt: desc`
         You can still see several people holding conversations on ${'the dock'}.
@@ -109,7 +113,7 @@ export const atTheDocks = new Scene(
               Apparently they’re looking for one or two big items and the rest of the cut’s
               for us. Not a bad deal, is it?”
 
-              She pauses. “Ah, but mind me manners. This here is the ${'First Mate'}. If I’m not
+              She pauses. “Ah, but mind me manners. This here is the First Mate. If I’m not
               around, you listen to what he says. But careful, he’s not nearly as understanding
               as I am.” She smiles.
               
@@ -246,8 +250,10 @@ export const atTheDocks = new Scene(
       ],
     },
     {
+      name: 'deck',
       herePrompt: desc`
-        You make your way onto ${'the deck'}. From here you see several crewmates busily getting the ship ready to sail.
+        You make your way onto the deck. From here you see several crewmates busily
+        getting the ship ready to sail.
       `,
       travelPrompt: desc`
         On ${'deck'}, you see other crew mates getting the ship sea-ready.
@@ -255,4 +261,4 @@ export const atTheDocks = new Scene(
       interactions: [],
     },
   ],
-);
+});

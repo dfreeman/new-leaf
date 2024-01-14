@@ -1,3 +1,14 @@
+:root {
+  --backdrop: #641;
+  --panel: #c94;
+  --border-light: #962;
+  --border-dark: #430;
+  --border-size: 4px;
+  --link-highlight: #d7ad6c;
+
+  background-color: var(--backdrop);
+}
+
 .root {
   margin: auto;
 
@@ -5,37 +16,44 @@
   height: 600px;
 
   display: grid;
-  gap: 8px;
-  grid-template: 100px 50px 1fr / 360px 1fr 360px;
+  gap: 16px;
+  grid-template: 40px 1fr / 360px 1fr 360px;
   grid-template-areas:
     "art text status"
-    "art text menu"
-    "art text menu-content";
+    "art text journal";
+}
+
+.panel {
+  user-select: none;
+  padding: 8px;
+  background-color: var(--panel);
+  box-shadow:
+    var(--border-size) var(--border-size) 0 0 var(--border-dark),
+    var(--border-size) 0 0 0 var(--border-dark),
+    calc(0px - var(--border-size)) calc(0px - var(--border-size)) 0 0 var(--border-light),
+    calc(0px - var(--border-size)) 0 0 0 var(--border-light),
+    var(--border-size) calc(0px - var(--border-size)) 0 0 var(--border-light),
+    calc(0px - var(--border-size)) var(--border-size) 0 0 var(--border-dark);
 }
 
 .art {
   grid-area: art;
-  background-color: #668;
+  image-rendering: pixelated;
+  padding: 0;
 }
 
 .text {
-  padding: 8px;
   grid-area: text;
-  background-color: #866;
-  overflow: auto;
+  display: flex;
+  overflow: hidden;
 }
 
 .status {
   grid-area: status;
-  background-color: #686;
 }
 
-.menu {
-  grid-area: menu;
-  background-color: #686;
-}
-
-.menuContent {
-  grid-area: menu-content;
-  background-color: #686;
+.journal {
+  grid-area: journal;
+  display: flex;
+  overflow: hidden;
 }

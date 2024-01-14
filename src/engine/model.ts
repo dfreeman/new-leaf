@@ -60,17 +60,24 @@ export type InteractionOption<K extends string = string> = {
 };
 
 export type Area = {
+  name: string;
   herePrompt: Description;
   travelPrompt: Description;
   interactions: Array<Record<string, InteractionOption>>;
 };
 
 export class Scene {
+  public declare introFlag: JournalFlag;
+  public declare date: string;
+  public declare art: string;
+  public declare description: Description;
+  public declare areas: Array<Area>;
+
   public constructor(
-    public flag: JournalFlag,
-    public description: Description,
-    public areas: Array<Area>,
-  ) {}
+    params: Pick<Scene, 'introFlag' | 'art' | 'date' | 'description' | 'areas'>,
+  ) {
+    Object.assign(this, params);
+  }
 }
 
 export type Description = {

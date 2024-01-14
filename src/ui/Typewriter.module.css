@@ -1,0 +1,21 @@
+.scroller {
+  flex: 1;
+  overflow: auto;
+}
+
+.break {
+  display: block;
+  height: 20px;
+}
+
+.ref {
+  text-decoration: none;
+  color: inherit;
+  background-color: var(--link-highlight);
+  padding: 4px;
+
+  &[tabindex] {
+    cursor: pointer;
+  }
+}
+
