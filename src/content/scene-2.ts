@@ -1,18 +1,64 @@
 import { Scene, desc, flag, interaction } from '../engine/model';
-import shipArt from '../assets/ship.png';
-import portMusic from '../assets/audio/01-port.mp3';
+import shipArt from '../assets/shipwreck.png';
+import portMusic from '../assets/audio/03-stranded.mp3';
+import { seamanTattoo } from './scene-1';
 
-export const seenShipwreckIntro = flag``;
+export const seenShipwreckIntro = flag`
+  We started the day with bad weather, with a worse storm oncoming. We also saw an island
+  on the horizon with a Merchant Consortium shipwreck on it.
 
-export const mutiny = flag``;
+  Instead of picking up the pace to dodge the storm, the Consortium convinced the Captain
+  to beach at the island. They are trying to recover a logbook that they thought was
+  forever lost by that now deceased crew.
+`;
 
-export const ritualTattoos = flag``;
+export const accident = flag`
+  At the end of the day, one of the Consortium crewmen fell from the shipwreck onto the beach,
+  injuring himself seriously. The Bosun and I brought over a stretcher to help carry him back.
+`;
 
-export const foundLookout = flag``;
+export const noticeTattoo = flag`
+  As they carried him away, I noticed the injured crewman had a very unusual raised scar,
+  attained long before today's fall. I've no idea what would cause an injury to heal in such
+  a pattern.
+`;
 
-export const missingCrew = flag``;
+export const ritualTattoos = flag`
+  The scar I saw on the injured man seemed almost exactly the same to the one I saw on a
+  different Consortium crewman I met on the first day on board. It's not likely that the
+  design was the result of an "accident."
+`;
 
-export const shiwreck = new Scene({
+export const scholarBook = flag`
+  At least at the end of things the Consortium acquired their precious ledgerbook. Though
+  the Scholar seemed a bit baffled when I asked about it.
+`;
+
+export const longRest = flag`
+  I decided to take a long rest to recover my muscles from hauling wet lumber all day.
+`;
+
+export const missingCrew = flag`
+  I noticed that the Lookout and First Mate weren't around during the repairs.
+`;
+
+export const investigatedMissingCrew = flag`
+  TODO
+`;
+
+export const mutiny = flag`
+  TODO
+`;
+
+export const foundLookout = flag`
+  TODO
+`;
+
+export const helpedRepair = flag`
+  It was exhausting, but I helped the crew repair the damage to the ship's hull.
+`;
+
+export const shipwreck = new Scene({
   date: 'Day 25',
   art: shipArt,
   music: portMusic,
@@ -77,10 +123,171 @@ export const shiwreck = new Scene({
   ],
   outro: [
     {
+      setsFlags: [accident, noticeTattoo],
       description: desc`
-        TODO
+        As the day ends, you hear a deafening crack and a shout from the direction of the
+        shipwreck. Despite your exhaustion from the repairs, you and the ship’s crew are
+        sent out to investigate. From afar, you see the Scholar bent over a man laying on
+        the ground. You and the Bosun bring a makeshift stretcher across the beach.
+
+        The scene at the wreck is grisly. One of the seamen fell through a rotted board on
+        an upper deck, crashing into the sand. Large wood splinters and blood decorates his
+        skin.
+        
+        As you approach, the Bosun wrenches the stretcher from your hands and tosses it on
+        the ground. “Well I hope you found your bloody book before the fall. Ye lot better
+        damn well carry your own. We’ve been racing the storm trying to fix the damn ship
+        while you went on your little treasure hunt.”
+        
+        The Scholar looks up with an unusual fierceness in her eyes. “This man is seriously
+        wounded, bosun. He requires medical care, not your bitter derision.” She turns back
+        to the Consortium crew. “Men. Load him up and take him to my quarters. I’ll care
+        for him anon.”
+        
+        The Bosun crosses his arms gruffly as you both watch the scene unfold. As you watch
+        them load the injured man onto the stretcher, you notice that just above a
+        particularly gruesome splinter in the man’s leg is an intricately shaped, unusual
+        raised scar.
+      `,
+    },
+    {
+      shouldDisplay: (state) => state.hasFlag(seamanTattoo),
+      setsFlags: [ritualTattoos],
+      description: desc`
+        It is almost exactly the same as the one you saw on the arm of a different man on
+        your first day on the ship. 
+      `,
+    },
+    {
+      setsFlags: [scholarBook],
+      description: desc`
+        You all hurry back in the rain, running to get to the ship in time to dodge the worst
+        of the storm. As you all safely make it onto the deck, you find a moment to catch
+        your breath with the Scholar.
+        
+        “So,” you begin politely. “Did you find the ledgerbook?”
+        
+        “The what?” she asks, briefly caught off-guard. “I-- oh. Yes.” Her eyes brighten.
+        “Yes, we did.”      
       `,
     },
   ],
-  areas: [{}],
+  areas: [
+    {
+      name: 'Shipwreck Island',
+      travelPrompt: desc``,
+      herePrompt: desc`You are currently on the beach of an unknown island.`,
+      interactions: [
+        interaction({
+          start: {
+            isAvailable: (state) =>
+              !(
+                state.hasFlag(longRest) ||
+                state.hasFlag(investigatedMissingCrew)
+              ),
+            prompt: desc`
+              You can see ${'the Bosun'} giving orders to the crew.
+            `,
+            description: desc`
+              You approach the Bosun for orders.
+
+              “We’re in a right state, sailor,” he sighs. “A bloody right state.”
+            `,
+            continue: ['whatAreMyOrders', 'whatAreWeDoing'],
+          },
+          whatAreMyOrders: {
+            prompt: desc`“What’re my orders, bosun?”`,
+            description: desc`
+              The Bosun rubs his temples. “Gods. Just help unload the repair lumber from below
+              deck onto the beach. We’ve got the ship’s carpenter on duty to do quick repairs
+              before the storm sets in.”
+
+              “I hope to hell and back that those Consortium gits make it back here in time
+              for us to leave. I got half a mind to leave ‘em.” 
+            `,
+            continue: ['continue'],
+          },
+          whatAreWeDoing: {
+            prompt: desc`“What the hell are we even doing here?”`,
+            description: desc`
+              “They dragged us all this way to get some damn… logbook, or ledger or whatever.
+              Merchant business. Claims the last ship brought it here and lost it and that
+              it’s important they get it.
+
+              “I can’t pretend to understand this merchant shite. Why a bit of paper at sea
+              is worth anything to them at this point. But they threatened the Cap’n and
+              everything. She ain’t too pleased about it, but the First Mate forced the
+              choice.”
+            `,
+            continue: ['continue'],
+          },
+          continue: {
+            prompt: desc`Continue`,
+            description: desc`
+              With that you leave to help haul the lumber to the damaged hull. For about an
+              hour you haul rain-soaked building materials out to the ship’s carpenter. The
+              exhaustion in your muscles begins to set in.
+            `,
+            continue: ['longBreak', 'shortBreak', 'pushThrough'],
+          },
+          longBreak: {
+            prompt: desc`Find a place to sit and take a break. The fatigue is too much.`,
+            setsFlags: [longRest],
+            description: desc`
+              You walk halfway down the beach to an outcropping of palm trees, hoping to get
+              some space from the others and shelter from the rain.
+
+              You pass time there until you're feeling recovered, though at this point the
+              repairs are mostly done. The bosun may not be happy.
+            `,
+            continue: ['end'],
+          },
+          shortBreak: {
+            prompt: desc`Take a quick breather. The Bosun can’t rat you out for a few minutes’ rest.`,
+            setsFlags: [missingCrew],
+            description: desc`
+              You take a moment to stretch and breathe. You look at the horizon, tracking the
+              storm, then look back at the ship. As you absentmindedly scan the crew for faces,
+              it occurs to you that the Lookout and First Mate don’t seem to be here.
+            `,
+            continue: ['end'],
+          },
+          pushThrough: {
+            prompt: desc`
+              Push through. You need to get this repair done for the ship to escape the storm
+              in time.
+            `,
+            setsFlags: [helpedRepair],
+            description: desc`
+              You're exhausted, but you push through to make sure the repairs are done before
+              the storm arrives.
+            `,
+            continue: ['end'],
+          },
+        }),
+        interaction({
+          start: {
+            prompt: desc`
+              You can see ${'the Bosun'} giving orders to the crew. In a brief moment of eye 
+              contact, you see his eyes narrow upon you.
+            `,
+            isAvailable: (state) =>
+              state.hasFlag(longRest) || state.hasFlag(investigatedMissingCrew),
+          },
+        }),
+        interaction({
+          start: {
+            prompt: desc`You see ${'the Representative'} pacing about on the deck.`,
+          },
+        }),
+        interaction({
+          start: {
+            prompt: desc`
+              You can see the ship’s ${'damaged hull'}.
+            `,
+          },
+        }),
+      ],
+    },
+  ],
 });

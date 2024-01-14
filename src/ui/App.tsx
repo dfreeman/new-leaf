@@ -1,5 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { atTheDocks } from '../content/scene-1';
+import { shipwreck } from '../content/scene-2';
+import { mysteryNight } from '../content/scene-3';
 import {
   Area,
   Description,
@@ -11,11 +13,11 @@ import {
 } from '../engine/model';
 import styles from './App.module.css';
 import { Typewriter } from './Typewriter';
-import { mysteryNight } from '../content/scene-3';
 
 export type Actions = {
   startInteraction: (area: Area, interaction: Interaction) => void;
   travelToArea: (area: Area) => void;
+  endScene: () => void;
   addJournalFlags: (flags: Array<JournalFlag>) => void;
 };
 
@@ -44,6 +46,32 @@ function SceneIntro(props: {
               props.phase.scene.intro.flatMap((bit) => bit.setsFlags ?? []),
             );
             props.actions.travelToArea(props.phase.scene.areas[0]);
+          },
+        },
+      ]}
+    />
+  );
+}
+
+function SceneOutro(props: {
+  phase: Extract<GamePhase, { name: 'scene-outro' }>;
+  state: GameState;
+  actions: Actions;
+  onContinue: () => void;
+}) {
+  return (
+    <Typewriter
+      content={[
+        ...props.phase.scene.outro.filter(
+          (bit) => bit.shouldDisplay?.(props.state) ?? true,
+        ),
+        {
+          description: linkify(desc`Continue`),
+          action() {
+            props.actions.addJournalFlags(
+              props.phase.scene.intro.flatMap((bit) => bit.setsFlags ?? []),
+            );
+            props.onContinue();
           },
         },
       ]}
@@ -110,7 +138,11 @@ function InInteraction(props: {
               description: linkify(desc`Done`),
               action: () => {
                 props.actions.addJournalFlags(flags);
-                props.actions.travelToArea(props.phase.area);
+                if (key === 'end') {
+                  props.actions.travelToArea(props.phase.area);
+                } else if (key === 'end-scene') {
+                  props.actions.endScene();
+                }
               },
             };
           }
@@ -128,7 +160,7 @@ function InInteraction(props: {
 
 type GamePhase =
   | { name: 'scene-intro'; scene: Scene }
-  // | { name: 'scene-outro'; scene: Scene }
+  | { name: 'scene-outro'; scene: Scene }
   | { name: 'in-area'; scene: Scene; area: Area }
   | {
       name: 'in-interaction';
@@ -140,7 +172,7 @@ type GamePhase =
 export function App() {
   const [state, setState] = useState<'start' | 'playing' | 'end'>('start');
   return state === 'playing' ? (
-    <Game scenes={[atTheDocks, mysteryNight]} onEnd={() => setState('end')} />
+    <Game scenes={[atTheDocks, shipwreck, mysteryNight]} onEnd={() => setState('end')} />
   ) : state === 'start' ? (
     <div className={styles.splash} onClick={() => setState('playing')}>
       Click to Start
@@ -161,19 +193,13 @@ function Game(props: {
     scene: props.scenes[0],
   });
 
-  const advanceScene = useCallback(() => {
-    const next = props.scenes[props.scenes.indexOf(phase.scene) + 1];
-    if (next) {
-      return setPhase({ name: 'scene-intro', scene: next });
-    } else {
-      return props.onEnd(state);
-    }
-  }, [props, state, phase]);
-
   const actions: Actions = {
     travelToArea: useCallback((area) => {
       setPhase((prev) => ({ name: 'in-area', scene: prev.scene, area }));
     }, []),
+    endScene: useCallback(() => {
+      setPhase({ name: 'scene-outro', scene: phase.scene });
+    }, [phase]),
     addJournalFlags: useCallback(
       (flags) => {
         for (const flag of flags) {
@@ -197,6 +223,15 @@ function Game(props: {
     ),
   };
 
+  const startNextScene = useCallback(() => {
+    const next = props.scenes[props.scenes.indexOf(phase.scene) + 1];
+    if (next) {
+      return setPhase({ name: 'scene-intro', scene: next });
+    } else {
+      return props.onEnd(state);
+    }
+  }, [props, state, phase]);
+
   return (
     <div className={styles.root}>
       <audio src={phase.scene.music} autoPlay={true} loop={true} />
@@ -208,15 +243,22 @@ function Game(props: {
           <SceneIntro phase={phase} state={state} actions={actions} />
         ) : phase.name === 'in-area' ? (
           <InArea phase={phase} state={state} actions={actions} />
-        ) : (
+        ) : phase.name === 'in-interaction' ? (
           <InInteraction phase={phase} state={state} actions={actions} />
+        ) : (
+          <SceneOutro
+            phase={phase}
+            state={state}
+            actions={actions}
+            onContinue={startNextScene}
+          />
         )}
       </div>
       <div className={`${styles.status} ${styles.panel}`}>
         {phase.scene.date}
         <div className={styles.fill} />
         {props.scenes.indexOf(phase.scene) < props.scenes.length - 1 && (
-          <div className={styles.end} onClick={advanceScene}>
+          <div className={styles.end} onClick={actions.endScene}>
             End Day
           </div>
         )}
