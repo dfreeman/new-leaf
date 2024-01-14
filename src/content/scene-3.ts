@@ -585,12 +585,11 @@ export const mysteryNight = new Scene({
           continue: ['whatIsTheBook'],
         },
         whatIsTheBook: {
-          // @TODO - railroad
           prompt: desc`"Then what is it?"`,
           description: desc`“A little too nosy for your own good, aren’t you? You bloody well should know better.”
 
           You look behind you and catch sight of the Expedition Leader, right before he hits you in the head with something, hard.`,
-          continue: ['end'],
+          continue: ['end-scene'],
         },
         emergency: {
           prompt: desc`“It’s a medical emergency.”`,
@@ -638,7 +637,7 @@ export const mysteryNight = new Scene({
           continue: ['deskTry', 'paperTry', 'clueTry', 'openGrimoire'],
         },
         openGrimoire: {
-          // @TODO - railroad
+          setsFlags: [grimoireKey],
           prompt: desc`Open the book.`,
           description: desc`You open the book and begin to read.
           
@@ -656,7 +655,7 @@ export const mysteryNight = new Scene({
           “A little too nosy for your own good, aren’t you? You bloody well should know better.”
           
           You look behind you and catch sight of the Expedition Leader, right before he hits you in the head with something, hard.`,
-          continue: ['end'],
+          continue: ['end-scene'],
         },
         deskTry: {
           prompt: desc`Check the desk drawers.`,
