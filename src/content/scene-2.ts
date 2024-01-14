@@ -118,6 +118,7 @@ export const shipwreck = new Scene({
         “For gods sakes. Get us landed! Let the merchants find their fecking little logbook and
         everyone else all hands on deck! We got a hull to fix before that damn storm comes and
         drowns us all!”
+
       `,
     },
   ],
@@ -273,6 +274,9 @@ export const shipwreck = new Scene({
             `,
             isAvailable: (state) =>
               state.hasFlag(longRest) || state.hasFlag(investigatedMissingCrew),
+            description: desc`
+              TODO
+            `,
           },
         }),
         interaction({
