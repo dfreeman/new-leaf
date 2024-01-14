@@ -27,16 +27,21 @@ function linkify(description: Description): Description {
 
 function SceneIntro(props: {
   phase: Extract<GamePhase, { name: 'scene-intro' }>;
+  state: GameState;
   actions: Actions;
 }) {
   return (
     <Typewriter
       content={[
-        { description: props.phase.scene.description },
+        ...props.phase.scene.intro.filter(
+          (bit) => bit.shouldDisplay?.(props.state) ?? true,
+        ),
         {
           description: linkify(desc`Continue`),
           action() {
-            props.actions.addJournalFlags([props.phase.scene.introFlag]);
+            props.actions.addJournalFlags(
+              props.phase.scene.intro.flatMap((bit) => bit.setsFlags ?? []),
+            );
             props.actions.travelToArea(props.phase.scene.areas[0]);
           },
         },
@@ -122,6 +127,7 @@ function InInteraction(props: {
 
 type GamePhase =
   | { name: 'scene-intro'; scene: Scene }
+  // | { name: 'scene-outro'; scene: Scene }
   | { name: 'in-area'; scene: Scene; area: Area }
   | {
       name: 'in-interaction';
@@ -131,27 +137,37 @@ type GamePhase =
     };
 
 export function App() {
-  const [playing, setPlaying] = useState(false);
-  return playing ? (
-    <Game />
-  ) : (
-    <div className={styles.splash} onClick={() => setPlaying(true)}>
+  const [state, setState] = useState<'start' | 'playing' | 'end'>('start');
+  return state === 'playing' ? (
+    <Game scenes={[atTheDocks]} onEnd={() => setState('end')} />
+  ) : state === 'start' ? (
+    <div className={styles.splash} onClick={() => setState('playing')}>
       Click to Start
     </div>
+  ) : (
+    <div className={styles.splash}>Done!</div>
   );
 }
 
-function Game() {
-  const state = useMemo(() => {
-    const state = new GameState();
-    console.log(state);
-    return state;
-  }, []);
+function Game(props: {
+  scenes: Array<Scene>;
+  onEnd: (state: GameState) => void;
+}) {
+  const state = useMemo(() => new GameState(), []);
   const [journal, setJournal] = useState<Array<JournalFlag>>([]);
   const [phase, setPhase] = useState<GamePhase>({
     name: 'scene-intro',
-    scene: atTheDocks,
+    scene: props.scenes[0],
   });
+
+  const advanceScene = useCallback(() => {
+    const next = props.scenes[props.scenes.indexOf(phase.scene) + 1];
+    if (next) {
+      return setPhase({ name: 'scene-intro', scene: next });
+    } else {
+      return props.onEnd(state);
+    }
+  }, [props, state, phase]);
 
   const actions: Actions = {
     travelToArea: useCallback((area) => {
@@ -188,7 +204,7 @@ function Game() {
       </div>
       <div className={`${styles.text} ${styles.panel}`}>
         {phase.name === 'scene-intro' ? (
-          <SceneIntro phase={phase} actions={actions} />
+          <SceneIntro phase={phase} state={state} actions={actions} />
         ) : phase.name === 'in-area' ? (
           <InArea phase={phase} state={state} actions={actions} />
         ) : (
@@ -197,6 +213,12 @@ function Game() {
       </div>
       <div className={`${styles.status} ${styles.panel}`}>
         {phase.scene.date}
+        <div className={styles.fill} />
+        {props.scenes.indexOf(phase.scene) < props.scenes.length - 1 && (
+          <div className={styles.end} onClick={advanceScene}>
+            End Day
+          </div>
+        )}
       </div>
       <div className={`${styles.journal} ${styles.panel}`}>
         <Typewriter

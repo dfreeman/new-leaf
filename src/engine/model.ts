@@ -66,19 +66,22 @@ export type Area = {
   interactions: Array<Record<string, InteractionOption>>;
 };
 
+export type Narrative = Array<{
+  description: Description;
+  shouldDisplay?: (state: GameState) => boolean;
+  setsFlags?: Array<JournalFlag>;
+}>;
+
 export class Scene {
-  public declare introFlag: JournalFlag;
   public declare date: string;
   public declare art: string;
   public declare music: string;
-  public declare description: Description;
+  public declare intro: Narrative;
+  public declare outro: Narrative;
   public declare areas: Array<Area>;
 
   public constructor(
-    params: Pick<
-      Scene,
-      'introFlag' | 'art' | 'music' | 'date' | 'description' | 'areas'
-    >,
+    params: Pick<Scene, 'art' | 'music' | 'date' | 'intro' | 'outro' | 'areas'>,
   ) {
     Object.assign(this, params);
   }

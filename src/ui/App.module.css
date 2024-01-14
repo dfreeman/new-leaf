@@ -28,7 +28,7 @@
 
   display: grid;
   gap: 16px;
-  grid-template: 40px 1fr / 360px 1fr 360px;
+  grid-template: 36px 1fr / 360px 1fr 360px;
   grid-template-areas:
     "art text status"
     "art text journal";
@@ -61,10 +61,20 @@
 
 .status {
   grid-area: status;
+  display: flex;
 }
 
 .journal {
   grid-area: journal;
   display: flex;
   overflow: hidden;
+}
+
+.fill {
+  flex: 1;
+}
+
+.end {
+  text-decoration: underline;
+  cursor: pointer;
 }
