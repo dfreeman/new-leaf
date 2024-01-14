@@ -10,10 +10,16 @@ Install dependencies:
 pnpm i
 ```
 
-Run dev sercer:
+Run dev server:
 
 ```sh
 pnpm dev
+```
+
+Publish to GitHub pages:
+
+```sh
+pnpm release
 ```
 
 <details>
