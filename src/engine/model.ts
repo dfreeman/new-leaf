@@ -56,7 +56,7 @@ export type InteractionOption<K extends string = string> = {
   description: Description;
   isAvailable?: (state: GameState) => boolean;
   setsFlags?: Array<JournalFlag>;
-  continue: Array<K | 'end'>;
+  continue: Array<K | 'end' | 'end-scene'>;
 };
 
 export type Area = {
