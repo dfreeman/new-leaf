@@ -11,6 +11,7 @@ import {
 } from '../engine/model';
 import styles from './App.module.css';
 import { Typewriter } from './Typewriter';
+import { mysteryNight } from '../content/scene-3';
 
 export type Actions = {
   startInteraction: (area: Area, interaction: Interaction) => void;
@@ -139,7 +140,7 @@ type GamePhase =
 export function App() {
   const [state, setState] = useState<'start' | 'playing' | 'end'>('start');
   return state === 'playing' ? (
-    <Game scenes={[atTheDocks]} onEnd={() => setState('end')} />
+    <Game scenes={[atTheDocks, mysteryNight]} onEnd={() => setState('end')} />
   ) : state === 'start' ? (
     <div className={styles.splash} onClick={() => setState('playing')}>
       Click to Start
