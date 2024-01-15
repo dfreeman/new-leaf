@@ -162,32 +162,7 @@ export const mysteryNight = new Scene({
   ],
   outro: [
     {
-      description: desc`You awaken above deck. It’s day time, and the sky is overcast.
-
-      You are bound in rope and gagged. In front of you is the Captain, who is also tied up and leashed to you by rope. You turn your head behind you. Each and every original crew member of this ship is tied together on this rope. Near the back of the line you see the Bosun.`,
-    },
-    {
-      shouldDisplay: state => state.hasFlag(captainKey),
-      description: desc`The Bosun's eyes narrow and he gestures his head forward. You look in front of you and catch sight of the Captain nervously twitching her wrists. Upon closer inspection, you see the tiniest glint of a concealed, folding blade poking out of the heel of her shoe. It appears to be jammed in an awkward angle.`,
-    },
-    {
-      description: desc`Towering above you are the four Consortium seamen. Up ahead you see the Expedition Leader, Scholar and First Mate discussing something while looking out to shore. Behind them the Representative and Lookout kick about their feet, nervously.`,
-    },
-    {
-      shouldDisplay: state => state.hasFlag(repKey),
-      description: desc`You and the Representative briefly make eye contact. He quickly turns away.`,
-    },
-    {
-      description: desc`The Expedition Leader and Scholar finish their discussion, and the First Mate shouts an order to the Seamen. One-by-one, they blindfold you each.`,
-    },
-    {
-      shouldDisplay: state => state.hasFlag(captainKey),
-      description: desc`As the seamen approach you, you pretend to struggle and stand. As they shove you to the ground, you kick your foot into the heel of the Captain’s shoe, hopefully unjambing the blade.
-
-      “Fecking idiot,” you hear the Seaman say as he ties the blindfold around you.`,
-    },
-    {
-      description: desc`You feel yourself getting dragged up to a standing position by the neck, and soon you are all shoved forward, dragged single file off the boat and onto the sands of the beach.`,
+      description: desc`You black out.`,
     },
   ],
   areas: [{

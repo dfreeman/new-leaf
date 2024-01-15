@@ -1,64 +1,68 @@
-import { Scene, desc, flag, interaction } from '../engine/model';
+import { Scene, desc, interaction } from '../engine/model';
 import shipArt from '../assets/ship.png';
-import nightMusic from '../assets/audio/05-mutiny.mp3';
-// @TODO might hack this into two scenes so both songs can play
+import mutinyMusic from '../assets/audio/05-mutiny.mp3';
+import { captainKey, repKey } from './scene-3';
 
-export const seenMysteryNightIntro = flag``;
-
-export const mysteryNight = new Scene({
-  date: 'Day 53',
+export const mutiny = new Scene({
+  date: 'Day 51, Morning',
   art: shipArt,
-  music: nightMusic,
+  music: mutinyMusic,
   intro: [
     {
-      description: desc`You and the crew begin your march. You feel your boots sink into the sand; you feel the sand shift into earth. You feel the brush encroaching higher on your body, you begin to feel tree branches and leaves whip and slice past your face. Eventually you feel the ground under your feet harden to stone. You are guided clumsily down a set of uneven stairs. The sound of your heels begin to click and echo around you. The whitish glow of the sun’s light that haloed your blindfold fades into darkness.
+      description: desc`You awaken above deck. It’s day time, and the sky is overcast.
 
-      The shuffling, grunting, and breathing of your crewmates quieten. You catch yourself holding your breath, to hear. To listen. To the rhythmic sound of… the tide? No… it is not the tide. It is breath.
-      
-      As you march forward, you begin to feel a current of wind at your legs. It comes in waves, alternating between slightly lifting you off your feet and suctioning you to the stone. It is not a pleasant, sea breeze. It is a thick, moist breath, salted, and slimed.
-      
-      The echoes of your footsteps were once quiet and gradual, but have become grander, and grander. You and your crew mates march in unison. Together, you’ve become an orchestral procession.
-      
-      “Stop,” you hear the Scholar say, her voice echoing throughout the space. You hear her move in front of your crew.
-      
-      “You now stand before the Great Precipice. We shall restore your eyes, so you may see. An ancient power reborn lies before you. Together, we shall raise it, care for it, nurture it lovingly, so it may grow into its beautiful, Adult form, and usher humanity to her Ascension.”
-      
-      Your blindfold is removed, and you see.`,
+      You are bound in rope and gagged. In front of you is the Captain, who is also tied up and leashed to you by rope. You turn your head behind you. Each and every original crew member of this ship is tied together on this rope. Near the back of the line you see the Bosun.`,
     },
     {
-      description: desc`You are in an enormous stone cavern, perhaps the size of the entire dock itself back at Port. In the stone of the cave walls are reliefs carved in the shape of tentacles, kelp, and vines, wrapped around many faces. Human faces. But not quite. [if scene3GrimoireKey] Faces like yours. [/if]
-
-      In the center of the chamber is a large… egg. It is twice the size of your ship. It is suspended from the ceiling, held in place solely by the surface tension of an enormous volume of briny, blue-green placentic ichor. Through the thick, translucent membrane, you can barely make out the shape of the being inside. Below lies a bellowing pit, filled with thick, fluorescent liquid.
-      
-      It breathes.`,
+      shouldDisplay: state => state.hasFlag(captainKey),
+      description: desc`The Bosun's eyes narrow and he gestures his head forward. You look in front of you and catch sight of the Captain nervously twitching her wrists. Upon closer inspection, you see the tiniest glint of a concealed, folding blade poking out of the heel of her shoe. It appears to be jammed in an awkward angle.`,
     },
     {
-      description: desc`“We shall now begin the sacrifice,” the Scholar says. “The ancient one must feed, so it may grow strong, be born unto this world, and bring forth our salvation.”
+      description: desc`Towering above you are the four Consortium seamen. Up ahead you see the Expedition Leader, Scholar and First Mate discussing something while looking out to shore. Behind them the Representative and Lookout kick about their feet, nervously.`,
+    },
+    {
+      shouldDisplay: state => state.hasFlag(repKey),
+      description: desc`You and the Representative briefly make eye contact. He quickly turns away.`,
+    },
+    {
+      description: desc`The Expedition Leader and Scholar finish their discussion, and the First Mate shouts an order to the Seamen. One-by-one, they blindfold you each.`,
+    },
+    {
+      shouldDisplay: state => state.hasFlag(captainKey),
+      description: desc`As the seamen approach you, you pretend to struggle and stand. As they shove you to the ground, you kick your foot into the heel of the Captain’s shoe, hopefully unjambing the blade.
 
-      The seamen lines you and the crew before the egg, Captain in front. Beginning with the back of the line, they cut the carpenter off from the rest of the rope. He struggles and begins to stumble away, but two seamen grasp him firmly by the arms and drag him to the front, and unto the precipice. 
-      
-      They shove him into the waters below.
-      
-      His screams are muffled. He falls what must be hundreds of feet into the depths. Instead of a large splash, you hear his body slap into the viscous liquid below. Sharp cracking, snapping and squelching sounds echo throughout the chamber. Followed by the sound of a slow suction, and a sickening bubbling as a vacuum closes over.
-      
-      They cut loose the next person in line.`,
-    }
+      “Fecking idiot,” you hear the Seaman say as he ties the blindfold around you.`,
+    },
+    {
+      description: desc`You feel yourself getting dragged up to a standing position by the neck, and soon you are all shoved forward, dragged single file off the boat and onto the sands of the beach.`,
+    },
   ],
   outro: [
     {
-      description: desc``,
-    }
+      description: desc`“Stop,” you hear the Scholar say, her voice echoing throughout the space. You hear her move in front of your crew.`,
+    },
   ],
   areas: [{
-    name: 'temple',
-    herePrompt: desc`You are in the temple of the Ancient One.`,
-    travelPrompt: desc`There is much to be seen in the ${'temple'}.`,
+    name: 'blindfolded',
+    herePrompt: desc`You're blindfolded.`,
+    travelPrompt: desc`You're ${'blindfolded'}.`,
     interactions: [
       interaction({
         start: {
-          prompt: desc``,
-          description: desc``,
-          continue: [],
+          prompt: desc`'From here, you may only move ${'forward.'}.`,
+          description: desc`You keep pace with the group. Your boots sink into the sand; you feel the sand shift into earth. You feel the brush encroaching higher on your body, you begin to feel tree branches and leaves whip and slice past your face. Eventually you feel the ground under your feet harden to stone. You are guided clumsily down a set of uneven stairs. The sound of your heels begin to click and echo around you. The whitish glow of the sun’s light that haloed your blindfold fades into darkness.`,
+          continue: ['march'],
+        },
+        march: {
+          prompt: desc`Press on, into the unknown.`,
+          description: desc`As if there is any other choice. As you delve deeper into the abyss, the shuffling, grunting, and breathing of your crewmates quieten. You catch yourself holding your breath, to hear. To listen. To the rhythmic sound of… the tide? No… it is not the tide. It is breath.
+          
+          As you march forward, you begin to feel a current of wind at your legs. It comes in waves, alternating between slightly lifting you off your feet and suctioning you to the stone. It is not a pleasant, sea breeze. It is a thick, moist breath, salted, and slimed.
+      
+          The echoes of your footsteps were once quiet and gradual, but have become grander, and grander. You and your crew mates march in unison. Together, you’ve become an funerary procession.
+
+          Dead men walking.`,
+          continue: ['end-scene'],
         },
       }),
     ],
