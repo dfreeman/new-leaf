@@ -230,25 +230,26 @@ export const temple = new Scene({
           continue: ['shouldWake', 'shouldSleep'],
         },
         shouldWake: {
-          prompt: desc``,
-          description: desc``,
-          continue: ['shouldWake2',],
+          prompt: desc`You should listen to them. You should wake up.`,
+          description: desc`(But why… simply stay here… tell me your stories…)`,
+          continue: ['shouldWake2', 'changeMindWake'],
         },
         shouldWake2: {
-          prompt: desc``,
-          description: desc``,
-          continue: ['shouldWake3', 'changeMindWake'],
-        },
-        shouldWake3: {
           setsFlags: [childTantrum],
-          prompt: desc``,
-          description: desc``,
+          prompt: desc`Are you a child or a god? Who could possibly want to stay here forever?`,
+          description: desc`The fetus shivers with anger. You feel your bones stirring.
+          
+          (No…! No, no, no! It’s… not… fair!)`,
           continue: ['end-scene'],
         },
         changeMindWake: {
-          prompt: desc``,
-          description: desc``,
-          continue: [],
+          prompt: desc`Well… maybe you don’t have to wake.`,
+          description: desc`(Yes… that’s right… what if I simply wish to sleep… forever…)
+
+          The two of You continue to observe each other.
+          
+          (I wish to sleep… but… but not alone… it’s hard to sleep… without these tales…)`,
+          continue: ['whoTellsTales', 'stayTellTales'],
         },
         shouldSleep: {
           prompt: desc``,
@@ -258,6 +259,36 @@ export const temple = new Scene({
           
           (I wish to sleep… but… but not alone… it’s hard to sleep… without these tales…)`,
           continue: ['whoTellsTales', 'stayTellTales'],
+        },
+        whoTellsTales: {
+          prompt: desc`Who usually tells you tales?`,
+          description: desc`(Hm… well… just before you… I heard a tale… a carpenter… who worked on a sailing ship… much like yours…)`,
+          continue: ['whoTellsTales2'],
+        },
+        whoTellsTales2: {
+          prompt: desc`The carpenter? The man who just fell into the pit?`,
+          description: desc`(Hmmm… that is how his tale ended… a rush of colors and wind, followed by cracks and darkness...)
+          
+          (Funny you also should have heard this tale before…)`,
+          continue: ['stayTellTales'],
+        },
+        stayTellTales: {
+          prompt: desc`I suppose I can tell you more tales.`,
+          description: desc`(Truly…? You’ll stay…? And tell me these tales… forever?)`,
+          continue: ['notForever', 'yesForever'],
+        },
+        notForever: {
+          prompt: desc`Well, not forever.`,
+          description: desc`Incredulity. (But… but why not…? You told me… that you’d… tell me… tales…!)`,
+          continue: ['notForever2', 'fineForever'],
+        },
+        notForever2: {},
+        fineForever: {},
+        yesForever: {
+          setsFlags: [childCalmed],
+          prompt: desc`Yes. I’ll tell you tales forever.`,
+          description: desc`Euphoria. (Yes…! Yes…! Tales…! Forever…!)`,
+          continue: ['end-scene'],
         },
         template: {
           prompt: desc``,
