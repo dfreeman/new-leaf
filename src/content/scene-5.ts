@@ -1,7 +1,7 @@
 import { Scene, desc, flag, interaction } from '../engine/model';
 import shipArt from '../assets/ship.png';
 import templeMusic from '../assets/audio/06-temple.mp3';
-import { grimoireKey } from './scene-3';
+import { grimoireKey, repKey } from './scene-3';
 
 export const death = flag``;
 
@@ -94,45 +94,116 @@ export const temple = new Scene({
         },
         pleadScholar: {
           setsFlags: [pled],
-          prompt: desc``,
-          description: desc``,
-          continue: [],
+          prompt: desc`The Scholar`,
+          description: desc`You attempt to scream at the Scholar through your gag. She is so enraptured by the scene before her to notice you.
+          
+          You struggle against your binds.`,
+          continue: ['plead', 'commune', 'somethingElse'],
         },
         pleadLeader: {
           setsFlags: [pled],
-          prompt: desc``,
-          description: desc``,
-          continue: [],
+          prompt: desc`The Expedition Leader`,
+          description: desc`You attempt to yell at the Expedition Leader through your gag, your glower unwavering. He looks back momentarily, unimpressed, then looks back at the egg with latent fascination.
+          
+          You struggle against your binds.`,
+          continue: ['plead', 'commune', 'somethingElse'],
         },
         pleadFM: {
           setsFlags: [pled],
-          prompt: desc``,
-          description: desc``,
-          continue: [],
+          prompt: desc`The First Mate`,
+          description: desc`You attempt to yell at the First Mate through your gag, your glower unwavering. He looks back momentarily, unimpressed, then looks back at the egg with latent fascination.
+          
+          You struggle against your binds.`,
+          continue: ['plead', 'commune', 'somethingElse'],
         },
         pleadSeamen: {
           setsFlags: [pled],
-          prompt: desc``,
-          description: desc``,
-          continue: [],
+          prompt: desc`The Seamen`,
+          description: desc`Two of the seamen are busy leading the next crewmate to the precipice. You grunt at the one closest to you. He looks at you, then smirks.
+          
+          You struggle against your binds.`,
+          continue: ['plead', 'commune', 'somethingElse'],
         },
         pleadLookout: {
           setsFlags: [pled],
-          prompt: desc``,
-          description: desc``,
-          continue: [],
+          prompt: desc`The Lookout`,
+          description: desc`You look about for Lookout. You catch sight of him at the back of the cavern, shaking and vomiting.
+          
+          You struggle against your binds.`,
+          continue: ['plead', 'commune', 'somethingElse'],
         },
         pleadRep: {
+          isAvailable: (state) => !state.hasFlag(repKey),
           setsFlags: [pled],
-          prompt: desc``,
-          description: desc``,
-          continue: [],
+          prompt: desc`The Representative`,
+          description: desc`You look about for the Representative. He is standing at the back of the line, nervously holding the ritual knife and watching as the seamen escort each crew member to the precipice. 
+          
+          is body shakes uncontrollably, his eyes glued to the Child.
+          
+          You struggle against your binds.`,
+          continue: ['plead', 'commune', 'somethingElse'],
         },
         pleadRepKey: {
+          isAvailable: (state) => state.hasFlag(repKey),
           setsFlags: [pled],
-          prompt: desc``,
-          description: desc``,
-          continue: [],
+          prompt: desc`The Representative`,
+          description: desc`You look about for the Representative. You catch sight of him behind you. He is standing at the back of the line, nervously clutching the ritual knife while his eyes follow each crew member to their death. His body shakes uncontrollably.
+
+          You make eye contact with him. His eyes widen.`,
+          continue: ['lookKnifeGrimoireKey', 'lookKnifeNoGrimoire', 'shoutRep'],
+        },
+        lookKnifeGrimoireKey: {
+          isAvailable: (state) => state.hasFlag(grimoireKey),
+          prompt: desc`Look at the knife.`,
+          description: desc`You narrow your eyes at him, then look at the knife. He looks down as well, then gulps nervously.
+          
+          He starts whispering to himself, his knuckles whitening with panic.`,
+          continue: ['nodRep', 'giveUpRep'],
+        },
+        // @TODO rewrite this somehow
+        nodRep: {
+          prompt: desc`Give him an affirming nod.`,
+          description: desc`You narrow your eyes at him, then look at the knife. He looks down as well, then gulps nervously.
+
+          “Bring the next sacrifice!” you hear the Scholar say from the front.
+          
+          The First Mate lets out a rough laugh. “Feh. This one should be good.” At the back of the line is the Bosun.
+          
+          You harden your gaze at the Representative. He’s looking at you as the Seaman approaches and outstretches his hand for the knife.
+          
+          With all the sudden-ness and emotion of years of pent up anger and derision, you see the ritual blade flash before your eyes as the Representative drives it into the Seaman’s chest. As the Seaman screams and coughs blood, the Representative quickly pulls out the dagger and drives it through the Bosun’s bindings.
+          
+          An absolute scene breaks out. Fighting, shouting, as men and women brawl against each other for dominance. As tempers flare and rise, you barely notice at first the rumbling floor of the cavern.`,
+          continue: ['end-scene'],
+        },
+        giveUpRep: {
+          prompt: desc`Give up on him. He's too panicked.`,
+          description: desc`The Representative's panic clouds his judgment. You need something else.`,
+          continue: ['plead', 'commune', 'somethingElse'],
+        },
+        lookKnifeNoGrimoire: {
+          isAvailable: (state) => {
+            return !state.hasFlag(grimoireKey) && state.hasFlag(repKey);
+          },
+          setsFlags: [childTantrum],
+          prompt: desc`Look at the knife.`,
+          description: desc`You narrow your eyes at him, then look at the knife. He looks down as well, then gulps nervously.
+
+          “Bring the next sacrifice!” you hear the Scholar say from the front.
+          
+          The First Mate lets out a rough laugh. “Feh. This one should be good.” At the back of the line is the Bosun.
+          
+          You harden your gaze at the Representative. He’s looking at you as the Seaman approaches and outstretches his hand for the knife.
+          
+          With all the sudden-ness and emotion of years of pent up anger and derision, you see the ritual blade flash before your eyes as the Representative drives it into the Seaman’s chest. As the Seaman screams and coughs blood, the Representative quickly pulls out the dagger and drives it through the Bosun’s bindings.
+          
+          An absolute scene breaks out. Fighting, shouting, as men and women brawl against each other for dominance. As tempers flare and rise, you barely notice at first the rumbling floor of the cavern.`,
+          continue: ['end-scene'],
+        },
+        shoutRep: {
+          prompt: desc`Try shouting at him to get his attention.`,
+          description: desc`You try to shout through your gag, but the nearest seaman hits you in the back of the head to shut you up and face you forward.`,
+          continue: ['plead', 'commune', 'somethingElse'],
         },
         pleadLastResort: {
           isAvailable: state => {
@@ -279,21 +350,32 @@ export const temple = new Scene({
         },
         notForever: {
           prompt: desc`Well, not forever.`,
-          description: desc`Incredulity. (But… but why not…? You told me… that you’d… tell me… tales…!)`,
+          description: desc`Incredulity. Absurdity. Your mind and heart are split into torment.
+          
+          (But… but why not…? You told me… that you’d… tell me… tales…!)`,
           continue: ['notForever2', 'fineForever'],
         },
-        notForever2: {},
-        fineForever: {},
+        notForever2: {
+          setsFlags: [childTantrum],
+          prompt: desc`I can’t stay forever. I have a life to return to.`,
+          description: desc`Anger. An incredulous rage, untempered by the trials and tribulations of life, vibrates in your bones.
+          
+          (No…! No, no, no! Without tales, then I shall… have to… wake…!)`,
+          continue: ['end-scene'],
+        },
+        fineForever: {
+          setsFlags: [childCalmed],
+          prompt: desc`Fine. I’ll stay forever.`,
+          description: desc`Euphoria exudes from the Child. You feel it resonate in your chest.
+          
+          (Yes…! Yes…! Tales…! Forever…!)`,
+          continue: ['end-scene'],
+        },
         yesForever: {
           setsFlags: [childCalmed],
           prompt: desc`Yes. I’ll tell you tales forever.`,
           description: desc`Euphoria. (Yes…! Yes…! Tales…! Forever…!)`,
           continue: ['end-scene'],
-        },
-        template: {
-          prompt: desc``,
-          description: desc``,
-          continue: [],
         },
       })
     ],
