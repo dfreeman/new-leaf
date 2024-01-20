@@ -42,6 +42,10 @@ export const missingCrew = flag`
   I noticed that the Lookout and First Mate weren't around during the repairs.
 `;
 
+export const missingLeader = flag`
+  I noticed that the Expedition Leader wasn't at the site of the shipwreck.
+`;
+
 export const investigatedMissingCrew = flag`
   TODO
 `;
@@ -51,6 +55,10 @@ export const mutiny = flag`
 `;
 
 export const foundLookout = flag`
+  TODO
+`;
+
+export const eavesdrop = flag`
   TODO
 `;
 
@@ -187,7 +195,7 @@ export const shipwreck = new Scene({
                 state.hasFlag(investigatedMissingCrew)
               ),
             prompt: desc`
-              You can see ${'the Bosun'} giving orders to the crew.
+              You can see ${'the Bosun'} giving orders to the crew to repair the damaged hull.
             `,
             description: desc`
               You approach the Bosun for orders.
@@ -268,6 +276,13 @@ export const shipwreck = new Scene({
         }),
         interaction({
           start: {
+            prompt: desc`You can see the damaged hull of the ${'ship'}.`,
+            description: desc``,
+            continue: [],
+          },
+        }),
+        interaction({
+          start: {
             prompt: desc`
               You can see ${'the Bosun'} giving orders to the crew. In a brief moment of eye 
               contact, you see his eyes narrow upon you.
@@ -275,21 +290,121 @@ export const shipwreck = new Scene({
             isAvailable: (state) =>
               state.hasFlag(longRest) || state.hasFlag(investigatedMissingCrew),
             description: desc`
-              TODO
+              You approach the Bosun. He seems none-too-pleased.
+
+              “Get back to work, sailor. We’ve a storm to beat.”
             `,
+            continue: ['returnToWork']
           },
+          returnToWork: {
+            prompt: desc`Follow your orders.`,
+            description: desc`You return to work, rushing to complete the repairs in time.`,
+            continue: ['end-scene'],
+          }
         }),
         interaction({
           start: {
             prompt: desc`You see ${'the Representative'} pacing about on the deck.`,
+            description: desc`
+              From here you can see the Consortium Representative pacing back and forth on deck, muttering to himself.
+
+              “Triple the pay… triple the pay… how am I supposed to explain this to the Council… gods, they’ll have my head… triple the pay…!”
+            `,
+            continue: ['dontBother'],
+          },
+          dontBother: {
+            prompt: desc`Look elsewhere.`,
+            description: desc`You decide not to bother him.`,
+            continue: ['end'],
+          }
+        }),
+        interaction({
+          start: {
+            prompt: desc`On the other side of the beach, you see the ${'Consortium shipwreck'}.`,
+            description: desc`From here you can see a group of Consortium members investigating the ship. Four men, likely the hired seamen, are moving about the wasted vessel. The Scholar appears to be overseeing their work from the beach.
+
+            The shipwreck appears to be in a very bad state. It is likely very dangerous for anyone to be on there for very long, as the rotting wood likely cannot hold much weight at this point.`,
+            continue: ['lookCloser', 'leave'],
+          },
+          lookCloser: {
+            setsFlags: [missingLeader],
+            prompt: desc`Look closer.`,
+            description: desc`Oddly enough, the Expedition Leader appears to be nowhere near the shipwreck.`,
+            continue: ['leave'],
+          },
+          leave: {
+            prompt: desc`Turn your attention elsewhere.`,
+            description: desc`You continue looking around the beach.`,
+            continue: ['end'],
+          }
+        }),
+        interaction({
+          start: {
+            isAvailable: state => state.hasFlag(eavesdrop),
+            prompt: desc`You can hear ${'low muttering'}.`,
+            description: desc``,
+            continue: [],
           },
         }),
         interaction({
           start: {
-            prompt: desc`
-              You can see the ship’s ${'damaged hull'}.
-            `,
+            prompt: desc`On the other side of the beach, you see the ${'Consortium shipwreck'}.`,
+            description: desc``,
+            continue: [],
           },
+        }),
+        interaction({
+          start: {
+            isAvailable: state => state.hasFlag(missingCrew),
+            prompt: desc`Of the crew working on repairs, the ${'First Mate'} is unaccounted for.`,
+            description: desc`You make your way across the beach in the rain, looking for signs of the missing crew members. A pair of heavy-booted footsteps catches your eye. `,
+            continue: ['followFootsteps', 'leave'],
+          },
+          followFootsteps: {
+            prompt: desc`Follow the footsteps.`,
+            description: desc`You follow the footsteps to the jungle’s edge.
+            
+            From here, you can hear low, muttering voices carried across the rain.`,
+            continue: ['listenIn', 'leave'],
+          },
+          listenIn: {
+            prompt: desc`Listen in discreetly.`,
+            description: desc`Quietly, you make your way towards the voices and try to listen in.
+
+            “You won’t regret this. You’re going to be on the right side of history.” A male voice.
+            
+            “Ye think I care about that? I think yer lot’s full of shit. All you merchant types are.”
+            
+            The other man laughs. “Ha. Don’t lump us in with those paper-pushing sods like that joke of a rep they sent. We’re the real deal. But if you’re still a non-believe, it’s fine by me. We’ll work towards the same goal and you’ll change your mind by the end.”
+            
+            “Fer someone who claims to be so different ye yap as much as the rest of them. Just get me my ship back at the end of this and ye have a deal.”
+            
+            “A Captain with no crew, eh?”
+            
+            “I’ll hire mine own once we get to Port. These curs are far too soft.”
+            
+            Their footsteps shuffle towards you. You find a place to hide and wait for them to leave.`,
+            continue: ['end'],
+          },
+          leave: {
+            prompt: desc`Turn back.`,
+            description: desc`You decide to leave it alone.`,
+            continue: ['end'],
+          },
+        }),
+        interaction({
+          start: {
+            isAvailable: state => state.hasFlag(missingCrew),
+            prompt: desc`The ${'Lookout'} is missing as well.`,
+            description: desc`You make your way across the beach in the rain, looking for signs of the missing lookout. A single pair of footsteps catches your eye, which eventually dart into the jungle.`,
+            continue: ['lookCloser'],
+          },
+          lookCloser: {
+            setsFlags: [investigatedMissingCrew],
+            prompt: desc`Look closer.`,
+            description: desc`As your eyes follow the forest line, you note a speck of red hair poking out from the bushes near the shipwreck.`,
+            continue: ['end'],
+          }
         }),
       ],
     },

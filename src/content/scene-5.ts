@@ -98,7 +98,7 @@ export const temple = new Scene({
           description: desc`You attempt to scream at the Scholar through your gag. She is so enraptured by the scene before her to notice you.
           
           You struggle against your binds.`,
-          continue: ['plead', 'commune', 'somethingElse'],
+          continue: ['plead', 'somethingElse', 'commune'],
         },
         pleadLeader: {
           setsFlags: [pled],
@@ -106,7 +106,7 @@ export const temple = new Scene({
           description: desc`You attempt to yell at the Expedition Leader through your gag, your glower unwavering. He looks back momentarily, unimpressed, then looks back at the egg with latent fascination.
           
           You struggle against your binds.`,
-          continue: ['plead', 'commune', 'somethingElse'],
+          continue: ['plead', 'somethingElse', 'commune'],
         },
         pleadFM: {
           setsFlags: [pled],
@@ -114,7 +114,7 @@ export const temple = new Scene({
           description: desc`You attempt to yell at the First Mate through your gag, your glower unwavering. He looks back momentarily, unimpressed, then looks back at the egg with latent fascination.
           
           You struggle against your binds.`,
-          continue: ['plead', 'commune', 'somethingElse'],
+          continue: ['plead', 'somethingElse', 'commune'],
         },
         pleadSeamen: {
           setsFlags: [pled],
@@ -122,7 +122,7 @@ export const temple = new Scene({
           description: desc`Two of the seamen are busy leading the next crewmate to the precipice. You grunt at the one closest to you. He looks at you, then smirks.
           
           You struggle against your binds.`,
-          continue: ['plead', 'commune', 'somethingElse'],
+          continue: ['plead', 'somethingElse', 'commune'],
         },
         pleadLookout: {
           setsFlags: [pled],
@@ -130,7 +130,7 @@ export const temple = new Scene({
           description: desc`You look about for Lookout. You catch sight of him at the back of the cavern, shaking and vomiting.
           
           You struggle against your binds.`,
-          continue: ['plead', 'commune', 'somethingElse'],
+          continue: ['plead', 'somethingElse', 'commune'],
         },
         pleadRep: {
           isAvailable: (state) => !state.hasFlag(repKey),
@@ -141,7 +141,7 @@ export const temple = new Scene({
           is body shakes uncontrollably, his eyes glued to the Child.
           
           You struggle against your binds.`,
-          continue: ['plead', 'commune', 'somethingElse'],
+          continue: ['plead', 'somethingElse', 'commune'],
         },
         pleadRepKey: {
           isAvailable: (state) => state.hasFlag(repKey),
@@ -156,30 +156,11 @@ export const temple = new Scene({
           isAvailable: (state) => state.hasFlag(grimoireKey),
           prompt: desc`Look at the knife.`,
           description: desc`You narrow your eyes at him, then look at the knife. He looks down as well, then gulps nervously.
-          
-          He starts whispering to himself, his knuckles whitening with panic.`,
-          continue: ['nodRep', 'giveUpRep'],
-        },
-        // @TODO rewrite this somehow
-        nodRep: {
-          prompt: desc`Give him an affirming nod.`,
-          description: desc`You narrow your eyes at him, then look at the knife. He looks down as well, then gulps nervously.
 
-          “Bring the next sacrifice!” you hear the Scholar say from the front.
+          He looks up at you and mouths, silently, "Wait."
           
-          The First Mate lets out a rough laugh. “Feh. This one should be good.” At the back of the line is the Bosun.
-          
-          You harden your gaze at the Representative. He’s looking at you as the Seaman approaches and outstretches his hand for the knife.
-          
-          With all the sudden-ness and emotion of years of pent up anger and derision, you see the ritual blade flash before your eyes as the Representative drives it into the Seaman’s chest. As the Seaman screams and coughs blood, the Representative quickly pulls out the dagger and drives it through the Bosun’s bindings.
-          
-          An absolute scene breaks out. Fighting, shouting, as men and women brawl against each other for dominance. As tempers flare and rise, you barely notice at first the rumbling floor of the cavern.`,
-          continue: ['end-scene'],
-        },
-        giveUpRep: {
-          prompt: desc`Give up on him. He's too panicked.`,
-          description: desc`The Representative's panic clouds his judgment. You need something else.`,
-          continue: ['plead', 'commune', 'somethingElse'],
+          You struggle against your binds.`,
+          continue: ['plead', 'somethingElse', 'commune'],
         },
         lookKnifeNoGrimoire: {
           isAvailable: (state) => {
@@ -203,7 +184,7 @@ export const temple = new Scene({
         shoutRep: {
           prompt: desc`Try shouting at him to get his attention.`,
           description: desc`You try to shout through your gag, but the nearest seaman hits you in the back of the head to shut you up and face you forward.`,
-          continue: ['plead', 'commune', 'somethingElse'],
+          continue: ['plead', 'somethingElse', 'commune'],
         },
         pleadLastResort: {
           isAvailable: state => {
