@@ -62,7 +62,7 @@ export const helpedRepair = flag`
   It was exhausting, but I helped the crew repair the damage to the ship's hull.
 `;
 
-export const shipwreck = new Scene({
+export default new Scene({
   date: 'Day 25',
   art: shipArt,
   music: portMusic,

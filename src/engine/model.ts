@@ -17,8 +17,10 @@ export function flag(text: TemplateStringsArray, ...refs: Array<string>) {
 }
 
 export class GameState {
-  private entries: Array<JournalFlag> = [];
-  private seenInteractions = new WeakSet<Interaction>();
+  public constructor(
+    public readonly flags: Array<JournalFlag> = [],
+    public readonly seenInteractions = new Set<Interaction>(),
+  ) {}
 
   beginInteraction(interaction: Interaction) {
     this.seenInteractions.add(interaction);
@@ -37,12 +39,12 @@ export class GameState {
 
   setFlag(flag: JournalFlag) {
     if (!this.hasFlag(flag)) {
-      this.entries.push(flag);
+      this.flags.push(flag);
     }
   }
 
   hasFlag(flag: JournalFlag) {
-    return this.entries.includes(flag);
+    return this.flags.includes(flag);
   }
 }
 

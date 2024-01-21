@@ -1,10 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
-import { atTheDocks } from '../content/scene-1';
-import { shipwreck } from '../content/scene-2';
-import { mysteryNight } from '../content/scene-3';
-import { mutinyScene } from '../content/scene-4';
-import { temple } from '../content/scene-5';
-import { endings } from '../content/scene-6';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Area,
   Description,
@@ -16,6 +10,7 @@ import {
 } from '../engine/model';
 import styles from './App.module.css';
 import { Typewriter } from './Typewriter';
+import { PersistenceStore } from '../engine/persistence';
 
 export type Actions = {
   startInteraction: (area: Area, interaction: Interaction) => void;
@@ -161,7 +156,7 @@ function InInteraction(props: {
   );
 }
 
-type GamePhase =
+export type GamePhase =
   | { name: 'scene-intro'; scene: Scene }
   | { name: 'scene-outro'; scene: Scene }
   | { name: 'in-area'; scene: Scene; area: Area }
@@ -172,32 +167,54 @@ type GamePhase =
       interaction: Interaction;
     };
 
+const store = new PersistenceStore();
+
 export function App() {
-  const [state, setState] = useState<'start' | 'playing' | 'end'>('start');
-  return state === 'playing' ? (
-    <Game
-      scenes={[atTheDocks, shipwreck, mysteryNight, mutinyScene, temple, endings]}
-      onEnd={() => setState('end')}
-    />
-  ) : state === 'start' ? (
-    <div className={styles.splash} onClick={() => setState('playing')}>
-      Click to Start
-    </div>
-  ) : (
-    <div className={styles.splash}>Done!</div>
-  );
+  const [mode, setMode] = useState<'start' | 'playing' | 'end'>('start');
+  const newGame = useCallback(() => {
+    store.clear();
+    setMode('playing');
+  }, []);
+
+  const continueGame = useCallback(() => setMode('playing'), []);
+
+  if (mode === 'playing') {
+    const { state, phase } = store.load();
+    return (
+      <Game state={state} initialPhase={phase} onEnd={() => setMode('end')} />
+    );
+  } else if (mode === 'start') {
+    return (
+      <div className={styles.splash}>
+        {store.hasSaveGame() && (
+          <div className={styles.start} onClick={continueGame}>
+            Continue Game
+          </div>
+        )}
+        <div className={styles.start} onClick={newGame}>
+          New Game
+        </div>
+      </div>
+    );
+  } else {
+    return <div className={styles.splash}>Done!</div>;
+  }
 }
 
-function Game(props: {
-  scenes: Array<Scene>;
+function Game({
+  state,
+  initialPhase,
+  onEnd,
+}: {
+  state: GameState;
+  initialPhase: GamePhase;
   onEnd: (state: GameState) => void;
 }) {
-  const state = useMemo(() => new GameState(), []);
-  const [journal, setJournal] = useState<Array<JournalFlag>>([]);
-  const [phase, setPhase] = useState<GamePhase>({
-    name: 'scene-intro',
-    scene: props.scenes[0],
-  });
+  const savedJournalEntries = useMemo(() => state.flags.length, [state]);
+  const [journal, setJournal] = useState<Array<JournalFlag>>(state.flags);
+  const [phase, setPhase] = useState<GamePhase>(initialPhase);
+
+  useEffect(() => store.save(phase, state), [state, phase]);
 
   const actions: Actions = {
     travelToArea: useCallback((area) => {
@@ -230,13 +247,13 @@ function Game(props: {
   };
 
   const startNextScene = useCallback(() => {
-    const next = props.scenes[props.scenes.indexOf(phase.scene) + 1];
+    const next = store.scenes[store.scenes.indexOf(phase.scene) + 1];
     if (next) {
       return setPhase({ name: 'scene-intro', scene: next });
     } else {
-      return props.onEnd(state);
+      return onEnd(state);
     }
-  }, [props, state, phase]);
+  }, [onEnd, state, phase]);
 
   return (
     <div className={styles.root}>
@@ -263,7 +280,7 @@ function Game(props: {
       <div className={`${styles.status} ${styles.panel}`}>
         {phase.scene.date}
         <div className={styles.fill} />
-        {props.scenes.indexOf(phase.scene) < props.scenes.length - 1 && (
+        {store.scenes.indexOf(phase.scene) < store.scenes.length - 1 && (
           <div className={styles.end} onClick={actions.endScene}>
             End Day
           </div>
@@ -271,6 +288,7 @@ function Game(props: {
       </div>
       <div className={`${styles.journal} ${styles.panel}`}>
         <Typewriter
+          startAt={savedJournalEntries * 2 + 1}
           content={[
             { description: desc`Journal` },
             ...journal.flatMap((flag) => [

@@ -121,7 +121,7 @@ export const spokeWithScholar = flag`
   I went to the guest chambers to ask the Scholar some questions.
 `;
 
-export const mysteryNight = new Scene({
+export default new Scene({
   date: 'Day 51',
   art: shipArt,
   music: nightMusic,

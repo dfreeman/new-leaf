@@ -31,38 +31,52 @@ function Segment({
 }
 
 export function Typewriter(props: {
+  startAt?: number;
   content: Array<{ description: Description; action?: () => void }>;
 }) {
   const delay = 10;
   const advance = 1;
   const end = useRef<HTMLDivElement | null>(null);
-  const [segment, setSegment] = useState(0);
   const [offset, setOffset] = useState(0);
-  const segments = useMemo(() => {
+  const [segments, segmentMapping] = useMemo(() => {
     const segments: Array<TypewriterSegment> = [];
-    for (const {
-      description: { refs, text },
-      action,
-    } of props.content) {
+    const mapping: Array<number> = [];
+    for (const [
+      contentIndex,
+      {
+        description: { refs, text },
+        action,
+      },
+    ] of props.content.entries()) {
       for (let i = 0; i < text.length; i++) {
         const paragraphs = text[i].split(/\s*\n\s*\n\s*/g);
         for (let j = 0; j < paragraphs.length; j++) {
+          mapping.push(contentIndex);
           segments.push({
             kind: 'text',
             content: paragraphs[j].replace(/\s*\n\s*/g, ' '),
           });
           if (j < paragraphs.length - 1) {
+            mapping.push(contentIndex);
             segments.push({ kind: 'break' });
           }
         }
         if (i < refs.length) {
+          mapping.push(contentIndex);
           segments.push({ kind: 'action', content: refs[i], action });
         }
       }
     }
-    return segments;
+    return [segments, mapping];
   }, [props.content]);
-
+  const startSegment = segmentMapping.indexOf(props.startAt ?? 0);
+  const [segment, setSegment] = useState(
+    startSegment === -1 ? segments.length + 1 : startSegment,
+  );
+  if (props.startAt !== undefined) {
+    console.log(segmentMapping);
+    console.log({ startAt: props.startAt, segment });
+  }
   const current = segments[segment];
   const finish = useCallback(() => {
     setSegment(segments.length);

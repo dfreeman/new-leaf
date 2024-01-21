@@ -22,6 +22,12 @@ Publish to GitHub pages:
 pnpm release
 ```
 
+## Sources
+
+- [http://www.lazilong.com/apple_II/a2font/a2font.html]
+- [https://commons.wikimedia.org/wiki/File:Gale%C3%A3o_%22Santa_Luzia%22.jpg]
+- [https://commons.wikimedia.org/wiki/File:Het_eerder_tijdens_een_storm_gestrande_schip_is_omgevallen,_Bestanddeelnr_926-8075.jpg]
+
 <details>
 <summary>Default README contents from the Vite template</summary>
 

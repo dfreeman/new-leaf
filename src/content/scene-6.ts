@@ -12,7 +12,7 @@ export const sacBosun = flag``;
 
 export const justWatched = flag``;
 
-export const endings = new Scene({
+export default new Scene({
   date: 'Date Unknown.',
   art: shipArt,
   music: templeMusic,

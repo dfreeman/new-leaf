@@ -93,7 +93,7 @@ export const snubbedScholar = flag`
   exaggerating.
 `;
 
-export const atTheDocks = new Scene({
+export default new Scene({
   date: 'Day 1',
   art: shipArt,
   music: portMusic,

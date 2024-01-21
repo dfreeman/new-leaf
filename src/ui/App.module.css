@@ -14,10 +14,15 @@
   font-size: 200%;
   width: 100vw;
   height: 100vh;
-  cursor: pointer;
   display: flex;
+  flex-flow: column;
+  gap: 2em;
   align-items: center;
   justify-content: center;
+}
+
+.start {
+  cursor: pointer;
 }
 
 .root {

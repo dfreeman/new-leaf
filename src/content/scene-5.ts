@@ -15,7 +15,7 @@ export const pled = flag`I pled for help.`;
 
 export const toldTale = flag`I told the Child a tale of my choosing.`;
 
-export const temple = new Scene({
+export default new Scene({
   date: 'Day 52...?',
   art: shipArt,
   music: templeMusic,

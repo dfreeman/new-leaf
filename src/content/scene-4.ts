@@ -3,7 +3,7 @@ import shipArt from '../assets/ship.png';
 import mutinyMusic from '../assets/audio/05-mutiny.mp3';
 import { captainKey, repKey } from './scene-3';
 
-export const mutinyScene = new Scene({
+export default new Scene({
   date: 'Day 52?',
   art: shipArt,
   music: mutinyMusic,
