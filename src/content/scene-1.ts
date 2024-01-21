@@ -133,7 +133,9 @@ export const atTheDocks = new Scene({
   areas: [
     {
       name: 'dock',
-      herePrompt: desc`You are standing on the dock.`,
+      herePrompt: desc`
+      You are standing on the dock.
+      `,
       travelPrompt: desc`
         You can still see several people holding conversations on ${'the dock'}.
       `,

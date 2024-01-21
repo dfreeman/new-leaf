@@ -2,6 +2,9 @@ import { useCallback, useMemo, useState } from 'react';
 import { atTheDocks } from '../content/scene-1';
 import { shipwreck } from '../content/scene-2';
 import { mysteryNight } from '../content/scene-3';
+import { mutinyScene } from '../content/scene-4';
+import { temple } from '../content/scene-5';
+import { endings } from '../content/scene-6';
 import {
   Area,
   Description,
@@ -173,7 +176,7 @@ export function App() {
   const [state, setState] = useState<'start' | 'playing' | 'end'>('start');
   return state === 'playing' ? (
     <Game
-      scenes={[atTheDocks, shipwreck, mysteryNight]}
+      scenes={[atTheDocks, shipwreck, mysteryNight, mutinyScene, temple, endings]}
       onEnd={() => setState('end')}
     />
   ) : state === 'start' ? (

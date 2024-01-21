@@ -172,12 +172,16 @@ export const mysteryNight = new Scene({
       Unceremoniously, something heavy hits you in the back of the head.`,
     },
     {
-      description: desc`You black out.`,
+      description: desc`
+      You black out.
+      `,
     },
   ],
   areas: [{
     name: 'below deck',
-    herePrompt: desc`You are below deck, in the crew quarters.`,
+    herePrompt: desc`
+    You are below deck, in the crew quarters.
+    `,
     travelPrompt: desc`There is still plenty to be investigated ${'below deck'}.`,
     interactions: [
       interaction({
@@ -245,10 +249,10 @@ export const mysteryNight = new Scene({
           isAvailable: state => {
             return !state.hasFlag(tattleFM) && !state.hasFlag(tattleLeader) && !state.hasFlag(tattleLookout);
           },
-          prompt: desc`You approach the five sailors. They are gathered around a table, gambling with a set of dice. One of the men looks up at you and gestures his head towards an empty space at the table.
+          prompt: desc`Approach them.`,
+          description: desc`You approach the five sailors. They are gathered around a table, gambling with a set of dice. One of the men looks up at you and gestures his head towards an empty space at the table.
 
           “Ye care for a game of dice? All types a’ coin are welcome at the table.”`,
-          description: desc``,
           continue: ['join', 'notGamer'],
         },
         join: {

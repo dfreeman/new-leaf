@@ -16,17 +16,20 @@ export const pled = flag`I pled for help.`;
 export const toldTale = flag`I told the Child a tale of my choosing.`;
 
 export const temple = new Scene({
-  date: 'Day 51...?',
+  date: 'Day 52...?',
   art: shipArt,
   music: templeMusic,
   intro: [
     {
-      description: desc`“You now stand before the Great Precipice. We shall restore your eyes, so you may see. An ancient power reborn lies before you. Together, we shall raise it, care for it, nurture it lovingly, so it may grow into its beautiful, Adult form, and usher humanity to her Ascension.”
+      description: desc`
+      “You now stand before the Great Precipice. We shall restore your eyes, so you may see. An ancient power reborn lies before you. Together, we shall raise it, care for it, nurture it lovingly, so it may grow into its beautiful, Adult form, and usher humanity to her Ascension.”
       
-      Your blindfold is removed, and finally, you see.`,
+      Your blindfold is removed, and finally, you see.
+      `,
     },
     {
-      description: desc`“We shall now begin the sacrifice,” the Scholar says. “The ancient one must feed, so it may grow strong, be born unto this world, and bring forth our salvation.”
+      description: desc`
+      “We shall now begin the sacrifice,” the Scholar says. “The ancient one must feed, so it may grow strong, be born unto this world, and bring forth our salvation.”
 
       The seamen lines you and the crew before the egg, Captain in front. Beginning with the back of the line, they cut the carpenter off from the rest of the rope. He struggles and begins to stumble away, but two seamen grasp him firmly by the arms and drag him to the front, and unto the precipice. 
       
@@ -34,17 +37,29 @@ export const temple = new Scene({
       
       His screams are muffled. He falls what must be hundreds of feet into the depths. Instead of a large splash, you hear his body slap into the viscous liquid below. Sharp cracking, snapping and squelching sounds echo throughout the chamber. Followed by the sound of a slow suction, and a sickening bubbling as a vacuum closes over.
       
-      They cut loose the next person in line.`,
+      They cut loose the next person in line.
+      `,
     }
   ],
   outro: [
     {
-      description: desc``,
+      shouldDisplay: state => state.hasFlag(childCalmed),
+      description: desc`
+      Your sense of your own body begins to fade.
+      `,
+    },
+    {
+      shouldDisplay: state => !state.hasFlag(childCalmed),
+      description: desc`
+      The ground shudders and quakes.
+      `,
     }
   ],
   areas: [{
     name: 'temple',
-    herePrompt: desc`You are in an enormous stone cavern, perhaps the size of the entire dock itself back at Port.`,
+    herePrompt: desc`
+    You are in an enormous stone cavern, perhaps the size of the entire dock itself back at Port.
+    `,
     travelPrompt: desc`There is much to be seen in the ${'temple'}.`,
     interactions: [
       interaction({
@@ -190,15 +205,15 @@ export const temple = new Scene({
           isAvailable: state => {
             return !state.hasFlag(grimoireKey) && (state.hasFlag(struggled) || state.hasFlag(pled));
           },
-          setsFlags: [death],
+          setsFlags: [childTantrum],
           prompt: desc`Do something... anything...!`,
-          description: desc``,
+          description: desc`Suddenly, a you hear a shriek.`,
           continue: ['end-scene'],
         },
         somethingElse: {
           prompt: desc`There must be something else.`,
           description: desc`You decide there must be some other way.`,
-          continue: ['struggle', 'plead', 'commune']
+          continue: ['struggle', 'plead', 'commune', 'pleadLastResort']
         },
         commune: {
           isAvailable: state => {
@@ -304,7 +319,7 @@ export const temple = new Scene({
           continue: ['whoTellsTales', 'stayTellTales'],
         },
         shouldSleep: {
-          prompt: desc``,
+          prompt: desc`Well… maybe you don’t have to wake.`,
           description: desc`(Yes… that’s right… what if I simply wish to sleep… forever…)
 
           The two of You continue to observe each other.

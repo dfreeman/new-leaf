@@ -182,7 +182,9 @@ export const shipwreck = new Scene({
     {
       name: 'Shipwreck Island',
       travelPrompt: desc``,
-      herePrompt: desc`You are currently on the beach of an unknown island.`,
+      herePrompt: desc`
+      You are currently on the beach of an unknown island.
+      `,
       interactions: [
         interaction({
           start: {
@@ -273,10 +275,16 @@ export const shipwreck = new Scene({
         }),
         interaction({
           start: {
-            prompt: desc`You can see the damaged hull of the ${'ship'}.`,
-            description: desc``,
-            continue: [],
+            prompt: desc`You can see the ${'damaged hull'} of the ship.`,
+            description: desc`From here you see the Bosun barking orders to various crew members to help with repairs. The Captain is mulling over something on deck. You watch everyone move about for a while.`,
+            continue: ['lookCloser'],
           },
+          lookCloser: {
+            setsFlags: [missingCrew],
+            prompt: desc`Look closer.`,
+            description: desc`As you absentmindedly scan the crew for faces, it occurs to you that the Lookout and First Mate don’t seem to be here.`,
+            continue: ['end'],
+          }
         }),
         interaction({
           start: {
