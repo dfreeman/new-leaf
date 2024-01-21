@@ -162,6 +162,16 @@ export const mysteryNight = new Scene({
   ],
   outro: [
     {
+      shouldDisplay: state => {
+        return !state.hasFlag(endCaptured) || !state.hasFlag(endConverted);
+      },
+      description: desc`You ignore that feeling in your gut. It's probably just seasickness.
+      
+      You spend the night drinking, drifting in and out of the crew quarters and mess hall. As you turn into your bunk at the end of the night, you hear someone walk up behind you.
+      
+      Unceremoniously, something heavy hits you in the back of the head.`,
+    },
+    {
       description: desc`You black out.`,
     },
   ],

@@ -31,10 +31,12 @@ export const mutiny = new Scene({
       shouldDisplay: state => state.hasFlag(captainKey),
       description: desc`As the seamen approach you, you pretend to struggle and stand. As they shove you to the ground, you kick your foot into the heel of the Captain’s shoe, hopefully unjambing the blade.
 
-      “Fecking idiot,” you hear the Seaman say as he ties the blindfold around you.`,
+      “Fecking idiot,” you hear the Seaman say.`,
     },
     {
-      description: desc`You feel yourself getting dragged up to a standing position by the neck, and soon you are all shoved forward, dragged single file off the boat and onto the sands of the beach.`,
+      description: desc`One by one, the seamen go down the line and blindfold each of you.
+      
+      Once they're done, you feel yourself getting dragged up to a standing position by the neck, and soon you are all shoved forward, dragged single file off the boat and onto the sands of the beach.`,
     },
   ],
   outro: [

@@ -47,19 +47,15 @@ export const missingLeader = flag`
 `;
 
 export const investigatedMissingCrew = flag`
-  TODO
+  Instead of helping with the repairs, I attempted to locate the unaccounted crew.
 `;
 
 export const mutiny = flag`
-  TODO
+  I overheard two men in the rain talking about the "right side of history" and someone getting their ship "back."
 `;
 
 export const foundLookout = flag`
-  TODO
-`;
-
-export const eavesdrop = flag`
-  TODO
+  I noticed the Lookout stole away from the rest of the crew during repairs to watch the Consortium crew search the shipwreck.
 `;
 
 export const helpedRepair = flag`
@@ -134,7 +130,8 @@ export const shipwreck = new Scene({
     {
       setsFlags: [accident, noticeTattoo],
       description: desc`
-        As the day ends, you hear a deafening crack and a shout from the direction of the
+        The crew toils to complete repairs on the ship's hull before the day ends. As the sun
+        begins to set, you hear a deafening crack and a shout from the direction of the
         shipwreck. Despite your exhaustion from the repairs, you and the ship’s crew are
         sent out to investigate. From afar, you see the Scholar bent over a man laying on
         the ground. You and the Bosun bring a makeshift stretcher across the beach.
@@ -340,22 +337,68 @@ export const shipwreck = new Scene({
         }),
         interaction({
           start: {
-            isAvailable: state => state.hasFlag(eavesdrop),
-            prompt: desc`You can hear ${'low muttering'}.`,
-            description: desc``,
-            continue: [],
-          },
-        }),
-        interaction({
-          start: {
             prompt: desc`On the other side of the beach, you see the ${'Consortium shipwreck'}.`,
-            description: desc``,
-            continue: [],
+            description: desc`From here you can see a group of Consortium members investigating the ship. Four men, likely the hired seamen, are moving about the wasted vessel. The Scholar appears to be overseeing their work from the beach.
+
+            The shipwreck appears to be in a very bad state. It is likely very dangerous for anyone to be on there for very long, as the rotting wood likely cannot hold much weight at this point.`,
+            continue: ['lookCloser'],
+          },
+          lookCloser: {
+            setsFlags: [missingLeader],
+            prompt: desc`Look closer.`,
+            description: desc`You look closer at the shipwreck site, taking note of people weaving in and out of the ship with debris and rotting cargo.
+            
+            Oddly enough, the Expedition Leader appears to be nowhere near the shipwreck.`,
+            continue: ['end'],
+          }
+        }),
+        interaction({
+          start: {
+            isAvailable: state => {
+              return state.hasFlag(missingLeader) && !state.hasFlag(mutiny);
+            },
+            prompt: desc`You've noted that the  ${'First Mate'} is unaccounted for.`,
+            description: desc`You make your way across the beach in the rain, looking for signs of the missing crew members. A pair of heavy-booted footsteps catches your eye. `,
+            continue: ['followFootsteps', 'leave'],
+          },
+          followFootsteps: {
+            prompt: desc`Follow the footsteps.`,
+            description: desc`You follow the footsteps to the jungle’s edge.
+            
+            From here, you can hear low, muttering voices carried across the rain.`,
+            continue: ['listenIn', 'leave'],
+          },
+          listenIn: {
+            setsFlags: [mutiny],
+            prompt: desc`Listen in discreetly.`,
+            description: desc`Quietly, you make your way towards the voices and try to listen in.
+
+            “You won’t regret this. You’re going to be on the right side of history.” A male voice.
+            
+            “Ye think I care about that? I think yer lot’s full of shit. All you merchant types are.”
+            
+            The other man laughs. “Ha. Don’t lump us in with those paper-pushing sods like that joke of a rep they sent. We’re the real deal. But if you’re still a non-believe, it’s fine by me. We’ll work towards the same goal and you’ll change your mind by the end.”
+            
+            “Fer someone who claims to be so different ye yap as much as the rest of them. Just get me my ship back at the end of this and ye have a deal.”
+            
+            “A Captain with no crew, eh?”
+            
+            “I’ll hire mine own once we get to Port. These curs are far too soft.”
+            
+            Their footsteps shuffle towards you. You find a place to hide and wait for them to leave.`,
+            continue: ['end'],
+          },
+          leave: {
+            prompt: desc`Turn back.`,
+            description: desc`You decide to leave it alone.`,
+            continue: ['end'],
           },
         }),
         interaction({
           start: {
-            isAvailable: state => state.hasFlag(missingCrew),
+            isAvailable: state => {
+              return state.hasFlag(missingCrew) && !state.hasFlag(mutiny);
+            },
             prompt: desc`Of the crew working on repairs, the ${'First Mate'} is unaccounted for.`,
             description: desc`You make your way across the beach in the rain, looking for signs of the missing crew members. A pair of heavy-booted footsteps catches your eye. `,
             continue: ['followFootsteps', 'leave'],
@@ -368,6 +411,7 @@ export const shipwreck = new Scene({
             continue: ['listenIn', 'leave'],
           },
           listenIn: {
+            setsFlags: [mutiny],
             prompt: desc`Listen in discreetly.`,
             description: desc`Quietly, you make your way towards the voices and try to listen in.
 

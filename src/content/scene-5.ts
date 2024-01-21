@@ -3,17 +3,17 @@ import shipArt from '../assets/ship.png';
 import templeMusic from '../assets/audio/06-temple.mp3';
 import { grimoireKey, repKey } from './scene-3';
 
-export const death = flag``;
+export const death = flag`R.I.P.`;
 
-export const childCalmed = flag``;
+export const childCalmed = flag`I was able to calm the Child down.`;
 
-export const childTantrum = flag``;
+export const childTantrum = flag`The Child threw a tantrum.`;
 
-export const struggled = flag``;
+export const struggled = flag`I struggled against my binds.`;
 
-export const pled = flag``;
+export const pled = flag`I pled for help.`;
 
-export const toldTale = flag``;
+export const toldTale = flag`I told the Child a tale of my choosing.`;
 
 export const temple = new Scene({
   date: 'Day 51...?',
