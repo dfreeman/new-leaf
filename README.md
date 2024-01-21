@@ -4,9 +4,9 @@
 
 This project was created for the January 2024 Make-a-thon put together for/by a group of friends!
 
-Engine by @dfreeman
-Story by @pattra
-Soundtrack by [treehann](https://treehann.bandcamp.com/music)
+* Engine by @dfreeman
+* Story by @pattra
+* Soundtrack by [treehann](https://treehann.bandcamp.com/music)
 
 Images are stock photos and oil paintings that were run through pixelation filters. Sources:
 
