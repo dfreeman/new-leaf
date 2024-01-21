@@ -8,13 +8,17 @@ This project was created for the January 2024 Make-a-thon put together for/by a 
 * Story by @pattra
 * Soundtrack by [treehann](https://treehann.bandcamp.com/music)
 
-Images are stock photos and oil paintings that were run through pixelation filters. Sources:
+Sources:
 
 * Stormy Ocean by Jaroslaw Grudzinski
 * The Storm on the Sea of Galilee by Rembrandt
 * Sailing Ship--off Coast of Maine by William E. Norton
-* Ships at Sea by Jules Schaumburg
+* [https://commons.wikimedia.org/wiki/File:Gale%C3%A3o_%22Santa_Luzia%22.jpg]
+* [https://commons.wikimedia.org/wiki/File:Het_eerder_tijdens_een_storm_gestrande_schip_is_omgevallen,_Bestanddeelnr_926-8075.jpg]
 * iStock Photo
+* [http://www.lazilong.com/apple_II/a2font/a2font.html]
+
+Images are stock photos and paintings that were run through pixelation filters.
 
 ## Make It Go
 
@@ -35,12 +39,6 @@ Publish to GitHub pages:
 ```sh
 pnpm release
 ```
-
-## Sources
-
-- [http://www.lazilong.com/apple_II/a2font/a2font.html]
-- [https://commons.wikimedia.org/wiki/File:Gale%C3%A3o_%22Santa_Luzia%22.jpg]
-- [https://commons.wikimedia.org/wiki/File:Het_eerder_tijdens_een_storm_gestrande_schip_is_omgevallen,_Bestanddeelnr_926-8075.jpg]
 
 <details>
 <summary>Default README contents from the Vite template</summary>
