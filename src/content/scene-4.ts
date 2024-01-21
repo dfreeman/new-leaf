@@ -4,7 +4,7 @@ import mutinyMusic from '../assets/audio/05-mutiny.mp3';
 import { captainKey, repKey } from './scene-3';
 
 export const mutinyScene = new Scene({
-  date: 'Day 52...?',
+  date: 'Day 52?',
   art: shipArt,
   music: mutinyMusic,
   intro: [

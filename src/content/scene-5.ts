@@ -1,7 +1,7 @@
 import { Scene, desc, flag, interaction } from '../engine/model';
 import shipArt from '../assets/ship.png';
 import templeMusic from '../assets/audio/06-temple.mp3';
-import { grimoireKey, repKey } from './scene-3';
+import { captainKey, grimoireKey, repKey } from './scene-3';
 
 export const death = flag`R.I.P.`;
 
@@ -51,9 +51,39 @@ export const temple = new Scene({
     {
       shouldDisplay: state => !state.hasFlag(childCalmed),
       description: desc`
-      The ground shudders and quakes.
+      “A screeching sound echoes throughout the chamber. The ground beneath you begins to split apart and rock. The Expedition Leader is sent plummeting into the below.
+
+      “The hell is going on now with your godsdamned ritual?” shouts the First Mate.
       `,
-    }
+    },
+    {
+      shouldDisplay: state => !state.hasFlag(childCalmed) && state.hasFlag(captainKey) && state.hasFlag(repKey),
+      description: desc`
+      As if on cue, the Captain lashes out her boot against the nearest Seaman, driving her concealed blade into his shin, sending him plummeting into the ground.
+
+      The Bosun runs forward to cut the rest of your binds with the ritual dagger. “Come. That Consortium Rep whelp turned on his friends. We take the opening, now.”
+      
+      The First Mate bellows in frustration. Quickly, the Captain snatches the pistol off the fallen  Seaman’s body and shoots the First Mate square in the jaw. He stumbles back and falls into the pit.
+      `,
+    },
+    {
+      shouldDisplay: state => !state.hasFlag(childCalmed) && (!state.hasFlag(captainKey) || !state.hasFlag(repKey)),
+      description: desc`
+      The First Mate bellows in frustration and lunges towards the Captain. She jams the front of her boot into him and he screams as she reveals a hidden blade lodged in the toebox. He stands up and swings with both arms, knocking her off the precipice, but not before she stabs her other boot into him, dragging him down with her.
+
+      As their bones crack against the bottom of the pit, the wailing grows even louder.
+      
+      In the confusion, the Bosun knocks out the closest Seaman with his bare fists and breaks his bonds open against their dagger. Down the line he goes, desperately cutting everyone apart, accidentally gashing your hand open in the process.
+      `,
+    },
+    {
+      shouldDisplay: state => !state.hasFlag(childCalmed),
+      description: desc`
+      “No… no… no!” the Scholar shrieks, her pitch resonating against the cave walls. “It’s wrong… it’s all wrong…! It wasn’t supposed to end like this!” She collapses onto the ground, sobbing.
+
+      You and what remains of the crew gather. You must escape, and hope for the best.
+      `,
+    },
   ],
   areas: [{
     name: 'temple',

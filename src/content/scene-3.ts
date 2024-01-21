@@ -137,23 +137,27 @@ export const mysteryNight = new Scene({
     {
       shouldDisplay: (state) => state.hasFlag(mutiny),
       description: desc`
+
         The conversation you overheard in the jungle, back on the shipwreck island. Someone, if not several people, are plotting something against the ship’s Captain.
       `,
     },
     {
       shouldDisplay: (state) => state.hasFlag(ritualTattoos2),
       description: desc`
-        The raised scars you saw on not one, but two of the Consortium crewmates, seems too strange to ignore. The design was truly so intricate, and so similar. What sort of relationship might they have?
+
+        The identical raised scars you saw on not one, but two of the Consortium crewmates, seems too strange to ignore. What sort of relationship might they have?
       `,
     },
     {
       shouldDisplay: (state) => state.hasFlag(foundLookout),
       description: desc`
+
         You wonder why the Lookout abandoned the rest of the crew at the shipwreck island just to watch the Consortium crew. Why is he so involved in the Consortium?
       `,
     },
     {
       description: desc`
+      
         The moment that the Scholar looked at you so cluelessly when you asked after the Consortium ledgerbook still strikes you as odd. They were so desperate to find it… why was she caught so off guard?
 
         And of course, the Lost Isles themselves are shrouded in mystery. You’re approaching an uncharted land--one that tens, if not hundreds of unnamed men and women have gone and presumably died to find. Is this the kind of life you imagined for yourself, when you first came to Port? When you accepted the Captain’s offer for a new life at sea?

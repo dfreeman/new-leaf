@@ -20,37 +20,9 @@ export const endings = new Scene({
     {
       shouldDisplay: state => !state.hasFlag(childCalmed),
       description: desc`
-      “A screeching sound echoes throughout the chamber. The ground beneath you begins to split apart and rock. The Expedition Leader is sent plummeting into the below.
+      In a blur, you and the crew make it back to the ship and set sail. The rumbling of the island sends hairline fractures through the hull and the nearby seas into a frenzy, but there is no other choice.
 
-      “The hell is going on now with your godsdamned ritual?” shouts the First Mate.
-      `,
-    },
-    {
-      shouldDisplay: state => !state.hasFlag(childCalmed) && state.hasFlag(captainKey) && state.hasFlag(repKey),
-      description: desc`
-      As if on cue, the Captain lashes out her boot against the nearest Seaman, driving her concealed blade into his shin, sending him plummeting into the ground.
-
-      The Bosun runs forward to cut the rest of your binds with the ritual dagger. “Come. That Consortium Rep whelp turned on his friends. We take the opening, now.”
-      
-      The First Mate bellows in frustration. Quickly, the Captain snatches the pistol off the fallen  Seaman’s body and shoots the First Mate square in the jaw. He stumbles back and falls into the pit.
-      `,
-    },
-    {
-      shouldDisplay: state => !state.hasFlag(childCalmed) && (!state.hasFlag(captainKey) || !state.hasFlag(repKey)),
-      description: desc`
-      The First Mate bellows in frustration and lunges towards the Captain. She jams the front of her boot into him and he screams as she reveals a hidden blade lodged in the toebox. He stands up and swings with both arms, knocking her off the precipice, but not before she stabs her other boot into him, dragging him down with her.
-
-      As their bones crack against the bottom of the pit, the wailing grows even louder.
-      
-      In the confusion, the Bosun knocks out the closest Seaman with his bare fists and breaks his bonds open against their dagger. Down the line he goes, desperately cutting everyone apart, accidentally gashing your hand open in the process.
-      `,
-    },
-    {
-      shouldDisplay: state => !state.hasFlag(childCalmed),
-      description: desc`
-      “No… no… no!” the Scholar shrieks, her pitch resonating against the cave walls. “It’s wrong… it’s all wrong…! It wasn’t supposed to end like this!” She collapses onto the ground, sobbing.
-
-      You and what remains of the crew gather. You must leave, and hope for the best.
+      You make your way out into the open sea and watch as the sea swallows the island whole. A low murmuring erupts from the deep below, as a strange whirlpool begins to form where the island once was. You watch as the egg, ever so slowly, begins to emerge from the water.
       `,
     },
     {
@@ -63,21 +35,13 @@ export const endings = new Scene({
   outro: [
     {
       shouldDisplay: state => !state.hasFlag(childCalmed) && state.hasFlag(captainKey) && state.hasFlag(repKey),
-      description: desc`
-      In a blur, you and the crew make it back to the ship and set sail. The rumbling of the island sends hairline fractures through the hull and the nearby seas into a frenzy, but there is no other choice.
-
-      You make your way out into the open sea and watch as the sea swallows the island whole. A low murmuring erupts from the deep below, as a strange whirlpool begins to form where the island once was. You watch as the egg, ever so slowly, begins to emerge from the water.
-      
+      description: desc`    
       Besides you, you see the Captain, the Bosun, the Representative, and what’s left of your skeleton crew. Perhaps together you’ll be able to warn the world of what’s to come…
       `,
     },
     {
       shouldDisplay: state => !state.hasFlag(childCalmed) && (!state.hasFlag(captainKey) || !state.hasFlag(repKey)),
       description: desc`
-      In a blur, you and the crew make it back to the ship and set sail. The rumbling of the island sends hairline fractures through the hull and the nearby seas into a frenzy, but there is no other choice.
-
-      You make your way out into the open sea and watch as the sea swallows the island whole. A low murmuring erupts from the deep below, as a strange whirlpool begins to form where the island once was. You watch as the egg, ever so slowly, begins to emerge from the water.
-      
       You look around you on the ship. Neither the Captain or the Bosun made it. Barely anyone is left.
       
       You’ll just have to hope for the best that your word will mean a thing as you try to warn the world of what’s to come…
@@ -147,20 +111,20 @@ export const endings = new Scene({
   areas: [{
     name: 'somewhere',
     herePrompt: desc`
-    You are Somewhere.
+    You are in the middle of Somewhere.
     `,
     travelPrompt: desc`There is much to be seen ${'here'}.`,
     interactions: [
       interaction({
         start: {
           prompt: desc`${'What will you do?'}`,
-          description: desc`What will you do?`,
+          description: desc`Well?`,
           continue: ['settle', 'escape'],
         },
         escape: {
           isAvailable: state => !state.hasFlag(childCalmed),
-          prompt: desc`Escape.`,
-          description: desc`You must continue pressing forward, even unto the end.`,
+          prompt: desc`Press on.`,
+          description: desc`With all that you have seen here, you must continue press on, even unto the end.`,
           continue: ['end-scene'],
         },
         settle: {
