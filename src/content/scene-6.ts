@@ -1,5 +1,5 @@
 import { Scene, desc, flag, interaction } from '../engine/model';
-import shipArt from '../assets/ship.png';
+import shipArt from '../assets/ending.png';
 import templeMusic from '../assets/audio/07-ending.mp3';
 import { childCalmed } from './scene-5';
 import { captainKey, repKey } from './scene-3';
@@ -117,7 +117,9 @@ export default new Scene({
     interactions: [
       interaction({
         start: {
-          prompt: desc`${'What will you do?'}`,
+          prompt: desc`
+          ${'What will you do?'}
+          `,
           description: desc`Well?`,
           continue: ['settle', 'escape'],
         },

@@ -1,5 +1,5 @@
 import { Scene, desc, flag, interaction } from '../engine/model';
-import shipArt from '../assets/ship.png';
+import shipArt from '../assets/stormy.png';
 import nightMusic from '../assets/audio/04-night.mp3';
 import { mutiny, ritualTattoos as ritualTattoos2,foundLookout, missingCrew } from './scene-2';
 import { affirmedScholar } from './scene-1';
@@ -190,7 +190,9 @@ export default new Scene({
     interactions: [
       interaction({
         start: {
-          prompt: desc`You see the ${'Lookout'} and the Consortium ${'Seamen'} playing dice together.`,
+          prompt: desc`
+          You see the ${'Lookout'} and the Consortium ${'Seamen'} playing dice together.
+          `,
           description: desc`You approach the five Consortium sailors. They are gathered around a table, gambling with a set of dice. One of the men--the one wrapped in bandages from the fall--looks up at you and cracks a wry smile.`,
           continue: ['tattled', 'gamer'],
         },
@@ -346,7 +348,9 @@ export default new Scene({
       }),
       interaction({
         start: {
-          prompt: desc`You saw the ${'Bosun'} in the crew mess not too long ago.`,
+          prompt: desc`
+          You saw the ${'Bosun'} in the crew mess not too long ago.
+          `,
           description: desc`You head into the crew mess to find the Bosun. He’s sitting alone in a corner, busying himself with ale, gruel, and a few strips of jerky.
 
           He looks up from his meal and nods at you. “Sailor. Off-duty, are ye?”`,
@@ -508,7 +512,9 @@ export default new Scene({
           isAvailable: state => {
             return state.hasFlag(lookoutTattooScholar) || state.hasFlag(repLocation);
           }, 
-          prompt: desc`The ${'Scholar'} has spent most of her time locked up in the ${'guest quarters'} for the past several weeks, and is likely there now.`,
+          prompt: desc`
+          The ${'Scholar'} has spent most of her time locked up in the ${'guest quarters'} for the past several weeks, and is likely there now.
+          `,
           description: desc`You approach the guest quarters, where the Scholar is staying. The door to her room is shut tight.`,
           continue: ['knock', 'listen'],
         },
@@ -694,7 +700,9 @@ export default new Scene({
       interaction({
         start: {
           isAvailable: (state) => state.hasFlag(repLocation),
-          prompt: desc`You heard the ${'Representative'} was last seen above deck.`,
+          prompt: desc`
+          You heard the ${'Representative'} was last seen above deck.
+          `,
           description: desc`You head above deck to look for the Representative. Rather than having seasickness into the ocean, he is just standing under an awning looking out into the stormy waters.`,
           continue: ['rain', 'mess'],
         },

@@ -1,5 +1,5 @@
 import { Scene, desc, flag, interaction } from '../engine/model';
-import shipArt from '../assets/ship.png';
+import shipArt from '../assets/cave.png';
 import templeMusic from '../assets/audio/06-temple.mp3';
 import { captainKey, grimoireKey, repKey } from './scene-3';
 
@@ -94,7 +94,9 @@ export default new Scene({
     interactions: [
       interaction({
         start: {
-          prompt: desc`In the stone of the cave walls are reliefs carved in the shape of tentacles, kelp, and vines, wrapped around ${'something'}.`,
+          prompt: desc`
+          In the stone of the cave walls are reliefs carved in the shape of tentacles, kelp, and vines, wrapped around ${'something'}.
+          `,
           description: desc`Upon closer inspection, you realize the kelp and vines are wrapped and writhe around human faces.`,
           continue: ['face'],
         },
@@ -106,7 +108,9 @@ export default new Scene({
       }),
       interaction({
         start: {
-          prompt: desc`In the center of the chamber is a large, ${'egg'}-like monstrosity.`,
+          prompt: desc`
+          In the center of the chamber is a large, ${'egg'}-like monstrosity.
+          `,
           description: desc`It is twice the size of your ship. It is suspended from the ceiling, held in place solely by the surface tension of an immense volume of blue-green placentic ichor. Through the thick, barely translucent membrane, you can make out the shape of the being inside. Below it lies a bellowing pit, filled with thick, fluorescent liquid.`,
           continue: ['breath'],
         },
@@ -120,7 +124,9 @@ export default new Scene({
       }),
       interaction({
         start: {
-          prompt: desc`You must ${'find a way out'}.`,
+          prompt: desc`
+          You must ${'find a way out'}.
+          `,
           description: desc`You and your allies are bound and gagged. The Scholar and Expedition Leader are in complete control of the situation.
           
           What do you do?`,

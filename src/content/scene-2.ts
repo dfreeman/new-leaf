@@ -275,7 +275,9 @@ export default new Scene({
         }),
         interaction({
           start: {
-            prompt: desc`You can see the ${'damaged hull'} of the ship.`,
+            prompt: desc`
+            You can see the ${'damaged hull'} of the ship.
+            `,
             description: desc`From here you see the Bosun barking orders to various crew members to help with repairs. The Captain is mulling over something on deck. You watch everyone move about for a while.`,
             continue: ['lookCloser'],
           },
@@ -309,7 +311,9 @@ export default new Scene({
         }),
         interaction({
           start: {
-            prompt: desc`You see ${'the Representative'} pacing about on the deck.`,
+            prompt: desc`
+            You see ${'the Representative'} pacing about on the deck.
+            `,
             description: desc`
               From here you can see the Consortium Representative pacing back and forth on deck, muttering to himself.
 
@@ -325,7 +329,9 @@ export default new Scene({
         }),
         interaction({
           start: {
-            prompt: desc`On the other side of the beach, you see the ${'Consortium shipwreck'}.`,
+            prompt: desc`
+            On the other side of the beach, you see the ${'Consortium shipwreck'}.
+            `,
             description: desc`From here you can see a group of Consortium members investigating the ship. Four men, likely the hired seamen, are moving about the wasted vessel. The Scholar appears to be overseeing their work from the beach.
 
             The shipwreck appears to be in a very bad state. It is likely very dangerous for anyone to be on there for very long, as the rotting wood likely cannot hold much weight at this point.`,
@@ -345,7 +351,9 @@ export default new Scene({
         }),
         interaction({
           start: {
-            prompt: desc`On the other side of the beach, you see the ${'Consortium shipwreck'}.`,
+            prompt: desc`
+            On the other side of the beach, you see the ${'Consortium shipwreck'}.
+            `,
             description: desc`From here you can see a group of Consortium members investigating the ship. Four men, likely the hired seamen, are moving about the wasted vessel. The Scholar appears to be overseeing their work from the beach.
 
             The shipwreck appears to be in a very bad state. It is likely very dangerous for anyone to be on there for very long, as the rotting wood likely cannot hold much weight at this point.`,
@@ -365,7 +373,9 @@ export default new Scene({
             isAvailable: state => {
               return state.hasFlag(missingLeader) && !state.hasFlag(mutiny);
             },
-            prompt: desc`You've noted that the  ${'First Mate'} is unaccounted for.`,
+            prompt: desc`
+            You've noted that the  ${'First Mate'} is unaccounted for.
+            `,
             description: desc`You make your way across the beach in the rain, looking for signs of the missing crew members. A pair of heavy-booted footsteps catches your eye. `,
             continue: ['followFootsteps', 'leave'],
           },
@@ -407,7 +417,9 @@ export default new Scene({
             isAvailable: state => {
               return state.hasFlag(missingCrew) && !state.hasFlag(mutiny);
             },
-            prompt: desc`Of the crew working on repairs, the ${'First Mate'} is unaccounted for.`,
+            prompt: desc`
+            Of the crew working on repairs, the ${'First Mate'} is unaccounted for.
+            `,
             description: desc`You make your way across the beach in the rain, looking for signs of the missing crew members. A pair of heavy-booted footsteps catches your eye. `,
             continue: ['followFootsteps', 'leave'],
           },
@@ -447,7 +459,9 @@ export default new Scene({
         interaction({
           start: {
             isAvailable: state => state.hasFlag(missingCrew),
-            prompt: desc`The ${'Lookout'} is missing as well.`,
+            prompt: desc`
+            The ${'Lookout'} is missing as well.
+            `,
             description: desc`You make your way across the beach in the rain, looking for signs of the missing lookout. A single pair of footsteps catches your eye, which eventually dart into the jungle.`,
             continue: ['lookCloser'],
           },

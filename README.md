@@ -1,6 +1,20 @@
 # new-leaf
 
-Multimedia Make-a-thon 2024
+## About this project
+
+This project was created for the January 2024 Make-a-thon put together for/by a group of friends!
+
+Engine by @dfreeman
+Story by @pattra
+Soundtrack by [treehann](https://treehann.bandcamp.com/music)
+
+Images are stock photos and oil paintings that were run through pixelation filters. Sources:
+
+* Stormy Ocean by Jaroslaw Grudzinski
+* The Storm on the Sea of Galilee by Rembrandt
+* Sailing Ship--off Coast of Maine by William E. Norton
+* Ships at Sea by Jules Schaumburg
+* iStock Photo
 
 ## Make It Go
 

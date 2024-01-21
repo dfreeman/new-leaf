@@ -1,5 +1,5 @@
 import { Scene, desc, interaction } from '../engine/model';
-import shipArt from '../assets/ship.png';
+import shipArt from '../assets/mutiny.png';
 import mutinyMusic from '../assets/audio/05-mutiny.mp3';
 import { captainKey, repKey } from './scene-3';
 
@@ -69,7 +69,9 @@ export default new Scene({
     interactions: [
       interaction({
         start: {
-          prompt: desc`From here, you may only move ${'forward'}.`,
+          prompt: desc`
+          From here, you may only move ${'forward'}.
+          `,
           description: desc`
           You keep pace with the group. Your boots sink into the sand; you feel the sand shift into earth. You feel the brush encroaching higher on your body, you begin to feel tree branches and leaves whip and slice past your face. Eventually you feel the ground under your feet harden to stone.
           
