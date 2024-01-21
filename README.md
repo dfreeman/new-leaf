@@ -15,7 +15,7 @@ Sources:
 * Sailing Ship--off Coast of Maine by William E. Norton
 * [https://commons.wikimedia.org/wiki/File:Gale%C3%A3o_%22Santa_Luzia%22.jpg]
 * [https://commons.wikimedia.org/wiki/File:Het_eerder_tijdens_een_storm_gestrande_schip_is_omgevallen,_Bestanddeelnr_926-8075.jpg]
-* iStock Photo
+* [https://commons.wikimedia.org/wiki/File:Grotta_dei_Fantasmi_calcite_retro_illuminata_adventrediving.it.jpg]
 * [http://www.lazilong.com/apple_II/a2font/a2font.html]
 
 Images are stock photos and paintings that were run through pixelation filters.
