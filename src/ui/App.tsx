@@ -245,10 +245,10 @@ function Game({
     }, [phase]),
     addJournalFlags: useCallback(
       (flags) => {
+        setJournal((oldFlags) => [...oldFlags, ...flags]);
         for (const flag of flags) {
           state.setFlag(flag);
         }
-        setJournal((oldFlags) => [...oldFlags, ...flags]);
       },
       [state],
     ),

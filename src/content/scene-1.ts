@@ -596,7 +596,6 @@ export default new Scene({
               You also see an ${'adventurous-looking man'} and ${'scholarly-looking woman'} poring 
               over a ${'large map'} spread out over a table.
             `,
-            setsFlags: [metLeaderAndScholar],
             description: desc`
               A man dressed in a matching tan jacket and pants, covered with pockets, belts and
               tools, stands here with a scholarly-looking woman.
@@ -613,6 +612,7 @@ export default new Scene({
             continue: ['youLead', 'expeditionLeader', 'scholar'],
           },
           youLead: {
+            setsFlags: [metLeaderAndScholar],
             isAvailable: (state) => state.hasFlag(loadedCargo),
             prompt: desc`
               “You lead the Merchant Consortium’s lot? I thought that man at the dock was in
@@ -625,6 +625,7 @@ export default new Scene({
             continue: ['expeditionLeader', 'scholar'],
           },
           expeditionLeader: {
+            setsFlags: [metLeaderAndScholar],
             prompt: desc`“Expedition Leader? We already have a Captain aboard.”`,
             description: desc`
               The man’s smile tenses, momentarily. “Well. Not all of us are blessed with the ah,
@@ -653,6 +654,7 @@ export default new Scene({
             continue: ['end'],
           },
           scholar: {
+            setsFlags: [metLeaderAndScholar],
             prompt: desc`“A scholar? What need for books and letters do we have at sea?”`,
             description: desc`
               “Oh, I make myself useful,” the scholar says with a smile. “Aside from poring
