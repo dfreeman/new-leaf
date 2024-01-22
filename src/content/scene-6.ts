@@ -104,7 +104,9 @@ export default new Scene({
     },
     {
       description: desc`
+
       THE END.
+      
       `
     },
   ],

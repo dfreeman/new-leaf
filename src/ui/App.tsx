@@ -11,6 +11,7 @@ import {
 import styles from './App.module.css';
 import { Typewriter } from './Typewriter';
 import { PersistenceStore } from '../engine/persistence';
+import seaMusic from '../assets/audio/02-sea.mp3';
 
 export type Actions = {
   startInteraction: (area: Area, interaction: Interaction) => void;
@@ -161,11 +162,11 @@ export type GamePhase =
   | { name: 'scene-outro'; scene: Scene }
   | { name: 'in-area'; scene: Scene; area: Area }
   | {
-      name: 'in-interaction';
-      scene: Scene;
-      area: Area;
-      interaction: Interaction;
-    };
+    name: 'in-interaction';
+    scene: Scene;
+    area: Area;
+    interaction: Interaction;
+  };
 
 const store = new PersistenceStore();
 
@@ -177,6 +178,10 @@ export function App() {
   }, []);
 
   const continueGame = useCallback(() => setMode('playing'), []);
+  const restartGame = useCallback(() => {
+    store.clear();
+    setMode('start');
+  }, []);
 
   if (mode === 'playing') {
     const { state, phase } = store.load();
@@ -185,19 +190,34 @@ export function App() {
     );
   } else if (mode === 'start') {
     return (
-      <div className={styles.splash}>
-        {store.hasSaveGame() && (
-          <div className={styles.start} onClick={continueGame}>
-            Continue Game
+      <>
+        <audio src={seaMusic} autoPlay={true} loop={true} />
+        <div className={styles.splash}>
+          {store.hasSaveGame() && (
+            <div className={styles.start} onClick={continueGame}>
+              Continue Game
+            </div>
+          )}
+          <div className={styles.start} onClick={newGame}>
+            New Game
           </div>
-        )}
-        <div className={styles.start} onClick={newGame}>
-          New Game
         </div>
-      </div>
+      </>
     );
   } else {
-    return <div className={styles.splash}>Done!</div>;
+    return (
+      <>
+        <audio src={seaMusic} autoPlay={true} loop={true} />
+        <div className={styles.splash}>
+          <div className={styles.start} style={{cursor: 'default'}}>
+            FIN.
+          </div>
+          <div className={styles.start} onClick={restartGame}>
+            Restart?
+          </div>
+        </div>
+      </>
+    );
   }
 }
 
