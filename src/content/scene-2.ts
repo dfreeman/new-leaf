@@ -351,25 +351,6 @@ export default new Scene({
         }),
         interaction({
           start: {
-            prompt: desc`
-            On the other side of the beach, you see the ${'Consortium shipwreck'}.
-            `,
-            description: desc`From here you can see a group of Consortium members investigating the ship. Four men, likely the hired seamen, are moving about the wasted vessel. The Scholar appears to be overseeing their work from the beach.
-
-            The shipwreck appears to be in a very bad state. It is likely very dangerous for anyone to be on there for very long, as the rotting wood likely cannot hold much weight at this point.`,
-            continue: ['lookCloser'],
-          },
-          lookCloser: {
-            setsFlags: [missingLeader],
-            prompt: desc`Look closer.`,
-            description: desc`You look closer at the shipwreck site, taking note of people weaving in and out of the ship with debris and rotting cargo.
-            
-            Oddly enough, the Expedition Leader appears to be nowhere near the shipwreck.`,
-            continue: ['end'],
-          }
-        }),
-        interaction({
-          start: {
             isAvailable: state => {
               return state.hasFlag(missingLeader) && !state.hasFlag(mutiny);
             },

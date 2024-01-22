@@ -101,8 +101,6 @@ export default new Scene({
     {
       setsFlags: [seenDocsIntro],
       description: desc`
-        Today is your first day as part of the crew.
-
         You came to the Port to start a new life. After a few months of
         working here and there as a day laborer, the Captain approached you.
         
